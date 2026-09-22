@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scopedact"
+version = "0.14.1"
+description = "A local-first authority gateway and operator console for AI-agent tools."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{name = "Jay Goradia"}]
+keywords = ["authorization", "ai-agents", "identity", "least-privilege", "security"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+]
+
+[project.urls]
+Homepage = "https://github.com/jgoradia3/scopedact"
+Documentation = "https://github.com/jgoradia3/scopedact#readme"
+Issues = "https://github.com/jgoradia3/scopedact/issues"
+Source = "https://github.com/jgoradia3/scopedact"
+
+[project.scripts]
+scopedact = "scopedact.cli:main"
+scopedact-pilot = "scopedact.pilot.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+scopedact = ["data/*.json"]

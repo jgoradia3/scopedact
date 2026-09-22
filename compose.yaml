@@ -1,0 +1,5 @@
+services:
+  tour:
+    build: .
+    volumes:
+      - ./audit:/data

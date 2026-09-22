@@ -1,0 +1,106 @@
+name: scopedact-pilot
+x-common: &common
+  image: scopedact-pilot:local
+  build:
+    context: .
+    dockerfile: pilot/Dockerfile
+  read_only: true
+  tmpfs:
+    - /tmp
+    - /run/private:mode=0700
+  cap_drop: [ALL]
+  cap_add: [CHOWN, DAC_OVERRIDE, SETUID, SETGID]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 100
+  mem_limit: 256m
+  stop_grace_period: 10s
+services:
+  ticket-api:
+    <<: *common
+    command: [backend]
+    environment:
+      SCOPEDACT_BIND: 0.0.0.0
+      SCOPEDACT_PORT: '8881'
+      SCOPEDACT_DATABASE: /state/tickets.db
+    secrets:
+      - source: tool-key
+        target: tool.key
+    volumes: [tickets-state:/state]
+    networks: [protected]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8881/health',timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  gateway:
+    <<: *common
+    command: [gateway]
+    environment:
+      SCOPEDACT_BIND: 0.0.0.0
+      SCOPEDACT_PORT: '8870'
+      SCOPEDACT_DATABASE: /state/gateway.db
+      SCOPEDACT_TICKET_URL: http://ticket-api:8881
+      SCOPEDACT_ALLOW_LOCAL_HTTP: '1'
+    secrets:
+      - source: agent-key
+        target: agent.key
+      - source: child-key
+        target: child.key
+      - source: operator-key
+        target: operator.key
+      - source: tool-key
+        target: tool.key
+    ports: ["127.0.0.1:${SCOPEDACT_PILOT_PORT:-8870}:8870"]
+    volumes: [gateway-state:/state]
+    networks: [front, protected]
+    depends_on:
+      ticket-api:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8870/health',timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  agent-probe:
+    <<: *common
+    profiles: [test]
+    command: [agent-probe]
+    environment:
+      SCOPEDACT_GATEWAY_URL: http://gateway:8870
+    secrets:
+      - source: agent-key
+        target: agent.key
+    networks: [front]
+    depends_on:
+      gateway:
+        condition: service_healthy
+  child-probe:
+    <<: *common
+    profiles: [test]
+    command: [agent-probe, --role, child]
+    environment:
+      SCOPEDACT_GATEWAY_URL: http://gateway:8870
+    secrets:
+      - source: child-key
+        target: child.key
+    networks: [front]
+    depends_on:
+      gateway:
+        condition: service_healthy
+
+secrets:
+  child-key:
+    file: .scopedact-pilot/secrets/child.key
+  agent-key:
+    file: .scopedact-pilot/secrets/agent.key
+  operator-key:
+    file: .scopedact-pilot/secrets/operator.key
+  tool-key:
+    file: .scopedact-pilot/secrets/tool.key
+volumes:
+  tickets-state:
+  gateway-state:
+networks:
+  front: {}
+  protected:
+    internal: true

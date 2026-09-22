@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+.scopedact/
+dist/
+build/
+audit/*.jsonl
+audit/*.db
+audit/*.db-*
+audit/*.json
+!audit/.gitkeep
+!audit/sample_audit.jsonl
+.scopedact-pilot/
+pilot-results/

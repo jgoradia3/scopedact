@@ -1,0 +1,15 @@
+.git
+.github
+.venv
+__pycache__
+*.pyc
+*.zip
+audit/*.db
+audit/*.db-*
+audit/*.json
+audit/*.jsonl
+dist
+build
+.scopedact-pilot
+**/*.key
+pilot-results

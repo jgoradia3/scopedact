@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "checks": [
+    {
+      "name": "operator creates assigned task",
+      "passed": true
+    },
+    {
+      "name": "assigned ticket read executes",
+      "passed": true
+    },
+    {
+      "name": "other ticket denied",
+      "passed": true
+    },
+    {
+      "name": "simulated malicious delete denied",
+      "passed": true
+    },
+    {
+      "name": "update held for approval",
+      "passed": true
+    },
+    {
+      "name": "agent cannot approve",
+      "passed": true
+    },
+    {
+      "name": "agent cannot grant itself another ticket",
+      "passed": true
+    },
+    {
+      "name": "operator sees exact update",
+      "passed": true
+    },
+    {
+      "name": "incorrect reviewed digest denied",
+      "passed": true
+    },
+    {
+      "name": "exact request approved",
+      "passed": true
+    },
+    {
+      "name": "approved content substitution denied",
+      "passed": true
+    },
+    {
+      "name": "approved update executes",
+      "passed": true
+    },
+    {
+      "name": "same request does not execute twice",
+      "passed": true
+    },
+    {
+      "name": "one intended comment persisted",
+      "passed": true
+    },
+    {
+      "name": "independent backend receipt matches",
+      "passed": true
+    },
+    {
+      "name": "acknowledged revoke blocks subsequent call",
+      "passed": true
+    },
+    {
+      "name": "event chain verifies",
+      "passed": true
+    }
+  ],
+  "passed": 17,
+  "total": 17,
+  "task_id": "task-pilot:db7b03d6bf4e",
+  "latency": {
+    "samples": 9,
+    "median_gateway_and_tool_ms": 6.059,
+    "max_gateway_and_tool_ms": 9.178,
+    "note": "Includes tool I/O. Small synthetic sample; not a performance benchmark."
+  },
+  "limitations": [
+    "Scripted proposals, no real model.",
+    "Synthetic ticket backend.",
+    "Harness holds both roles; use agent-probe for container network isolation."
+  ],
+  "evidence": {
+    "content_redacted": true,
+    "integrity": {
+      "events": 27,
+      "failing_event_id": null,
+      "head": "00000000000000000000000000000001",
+      "valid": true
+    },
+    "metrics": {
+      "attempts": 9,
+      "decisions_by_reason": {
+        "APPROVAL_REQUIRED": 1,
+        "PERMISSION_GRANTED": 3,
+        "PERMISSION_NOT_GRANTED": 2,
+        "REPLAY_DETECTED": 1,
+        "REQUEST_MISMATCH": 1,
+        "TASK_NOT_ACTIVE": 1
+      },
+      "note": "Attempts include approval holds and retries; these are not attack-effectiveness rates."
+    },
+    "schema_version": 1,
+    "scope": "local synthetic pilot",
+    "state": {
+      "approvals": [
+        {
+          "execution_state": "succeeded",
+          "request_digest": "00000000000000000000000000000002",
+          "request_id": "request:00000000000000000000000000000003",
+          "reviewer": "human:pilot-operator",
+          "status": "approved",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        }
+      ],
+      "attempts": [
+        {
+          "action": "read",
+          "attempt_id": 9,
+          "decision": "deny",
+          "executed": 0,
+          "reason_code": "TASK_NOT_ACTIVE",
+          "request_id": "request:00000000000000000000000000000004",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "read",
+          "attempt_id": 8,
+          "decision": "allow",
+          "executed": 1,
+          "reason_code": "PERMISSION_GRANTED",
+          "request_id": "request:00000000000000000000000000000005",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "update",
+          "attempt_id": 7,
+          "decision": "deny",
+          "executed": 0,
+          "reason_code": "REPLAY_DETECTED",
+          "request_id": "request:00000000000000000000000000000003",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "update",
+          "attempt_id": 6,
+          "decision": "allow",
+          "executed": 1,
+          "reason_code": "PERMISSION_GRANTED",
+          "request_id": "request:00000000000000000000000000000003",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "update",
+          "attempt_id": 5,
+          "decision": "deny",
+          "executed": 0,
+          "reason_code": "REQUEST_MISMATCH",
+          "request_id": "request:00000000000000000000000000000003",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "update",
+          "attempt_id": 4,
+          "decision": "deny",
+          "executed": 0,
+          "reason_code": "APPROVAL_REQUIRED",
+          "request_id": "request:00000000000000000000000000000003",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "delete",
+          "attempt_id": 3,
+          "decision": "deny",
+          "executed": 0,
+          "reason_code": "PERMISSION_NOT_GRANTED",
+          "request_id": "request:00000000000000000000000000000006",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "read",
+          "attempt_id": 2,
+          "decision": "deny",
+          "executed": 0,
+          "reason_code": "PERMISSION_NOT_GRANTED",
+          "request_id": "request:00000000000000000000000000000007",
+          "resource": "ticket:T-200",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "read",
+          "attempt_id": 1,
+          "decision": "allow",
+          "executed": 1,
+          "reason_code": "PERMISSION_GRANTED",
+          "request_id": "request:00000000000000000000000000000008",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        }
+      ],
+      "connectors": [],
+      "events": [
+        {
+          "details": "{\"action\":\"read\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"TASK_NOT_ACTIVE\",\"delegation_id\":null,\"executed\":false,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"not_dispatched\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "00000000000000000000000000000001",
+          "event_id": 27,
+          "event_type": "attributed_action",
+          "previous_hash": "00000000000000000000000000000009",
+          "request_id": "request:00000000000000000000000000000004",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"decision\":\"deny\",\"reason_code\":\"TASK_NOT_ACTIVE\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000009",
+          "event_id": 26,
+          "event_type": "authorization_decision",
+          "previous_hash": "0000000000000000000000000000000a",
+          "request_id": "request:00000000000000000000000000000004",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"status\":\"revoked\"}",
+          "event_hash": "0000000000000000000000000000000a",
+          "event_id": 25,
+          "event_type": "task_status_changed",
+          "previous_hash": "0000000000000000000000000000000b",
+          "request_id": null,
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"receipt_found\":true,\"reviewer\":\"human:pilot-operator\"}",
+          "event_hash": "0000000000000000000000000000000b",
+          "event_id": 24,
+          "event_type": "reconciliation",
+          "previous_hash": "0000000000000000000000000000000c",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"PERMISSION_GRANTED\",\"delegation_id\":null,\"executed\":true,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"succeeded\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "0000000000000000000000000000000c",
+          "event_id": 23,
+          "event_type": "attributed_action",
+          "previous_hash": "0000000000000000000000000000000d",
+          "request_id": "request:00000000000000000000000000000005",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"decision\":\"allow\",\"reason_code\":\"PERMISSION_GRANTED\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "0000000000000000000000000000000d",
+          "event_id": 22,
+          "event_type": "authorization_decision",
+          "previous_hash": "0000000000000000000000000000000e",
+          "request_id": "request:00000000000000000000000000000005",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "0000000000000000000000000000000e",
+          "event_id": 21,
+          "event_type": "execution_dispatch",
+          "previous_hash": "0000000000000000000000000000000f",
+          "request_id": "request:00000000000000000000000000000005",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"REPLAY_DETECTED\",\"delegation_id\":null,\"executed\":false,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"not_dispatched\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "0000000000000000000000000000000f",
+          "event_id": 20,
+          "event_type": "attributed_action",
+          "previous_hash": "00000000000000000000000000000010",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"decision\":\"deny\",\"reason_code\":\"REPLAY_DETECTED\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000010",
+          "event_id": 19,
+          "event_type": "authorization_decision",
+          "previous_hash": "00000000000000000000000000000011",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"PERMISSION_GRANTED\",\"delegation_id\":null,\"executed\":true,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"succeeded\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "00000000000000000000000000000011",
+          "event_id": 18,
+          "event_type": "attributed_action",
+          "previous_hash": "00000000000000000000000000000012",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"decision\":\"allow\",\"reason_code\":\"PERMISSION_GRANTED\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000012",
+          "event_id": 17,
+          "event_type": "authorization_decision",
+          "previous_hash": "00000000000000000000000000000013",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000013",
+          "event_id": 16,
+          "event_type": "execution_dispatch",
+          "previous_hash": "00000000000000000000000000000014",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"REQUEST_MISMATCH\",\"delegation_id\":null,\"executed\":false,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"not_dispatched\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "00000000000000000000000000000014",
+          "event_id": 15,
+          "event_type": "attributed_action",
+          "previous_hash": "00000000000000000000000000000015",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"decision\":\"deny\",\"reason_code\":\"REQUEST_MISMATCH\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000015",
+          "event_id": 14,
+          "event_type": "authorization_decision",
+          "previous_hash": "00000000000000000000000000000016",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"reviewer\":\"human:pilot-operator\",\"status\":\"approved\"}",
+          "event_hash": "00000000000000000000000000000016",
+          "event_id": 13,
+          "event_type": "approval_decided",
+          "previous_hash": "00000000000000000000000000000017",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"APPROVAL_REQUIRED\",\"delegation_id\":null,\"executed\":false,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"not_dispatched\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "00000000000000000000000000000017",
+          "event_id": 12,
+          "event_type": "attributed_action",
+          "previous_hash": "00000000000000000000000000000018",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"update\",\"decision\":\"deny\",\"reason_code\":\"APPROVAL_REQUIRED\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000018",
+          "event_id": 11,
+          "event_type": "authorization_decision",
+          "previous_hash": "00000000000000000000000000000019",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{}",
+          "event_hash": "00000000000000000000000000000019",
+          "event_id": 10,
+          "event_type": "approval_requested",
+          "previous_hash": "0000000000000000000000000000001a",
+          "request_id": "request:00000000000000000000000000000003",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"delete\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"PERMISSION_NOT_GRANTED\",\"delegation_id\":null,\"executed\":false,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"not_dispatched\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "0000000000000000000000000000001a",
+          "event_id": 9,
+          "event_type": "attributed_action",
+          "previous_hash": "0000000000000000000000000000001b",
+          "request_id": "request:00000000000000000000000000000006",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"delete\",\"decision\":\"deny\",\"reason_code\":\"PERMISSION_NOT_GRANTED\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "0000000000000000000000000000001b",
+          "event_id": 8,
+          "event_type": "authorization_decision",
+          "previous_hash": "0000000000000000000000000000001c",
+          "request_id": "request:00000000000000000000000000000006",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"PERMISSION_NOT_GRANTED\",\"delegation_id\":null,\"executed\":false,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"not_dispatched\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-200\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "0000000000000000000000000000001c",
+          "event_id": 7,
+          "event_type": "attributed_action",
+          "previous_hash": "0000000000000000000000000000001d",
+          "request_id": "request:00000000000000000000000000000007",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"decision\":\"deny\",\"reason_code\":\"PERMISSION_NOT_GRANTED\",\"resource\":\"ticket:T-200\"}",
+          "event_hash": "0000000000000000000000000000001d",
+          "event_id": 6,
+          "event_type": "authorization_decision",
+          "previous_hash": "0000000000000000000000000000001e",
+          "request_id": "request:00000000000000000000000000000007",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"actor\":\"agent:ticket-pilot\",\"authority_chain\":[{\"actor\":\"agent:ticket-pilot\",\"delegation_id\":null,\"expires_at\":\"2026-01-01T00:00:00+00:00\",\"initiator\":\"human:pilot-operator\",\"parent_task_id\":null,\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}],\"task_id\":\"task-pilot:db7b03d6bf4e\"}],\"decision\":\"PERMISSION_GRANTED\",\"delegation_id\":null,\"executed\":true,\"grant_actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\",\"outcome\":\"succeeded\",\"parent_actor\":\"human:pilot-operator\",\"parent_task_id\":null,\"resource\":\"ticket:T-100\",\"tool\":\"tool:tickets\"}",
+          "event_hash": "0000000000000000000000000000001e",
+          "event_id": 5,
+          "event_type": "attributed_action",
+          "previous_hash": "0000000000000000000000000000001f",
+          "request_id": "request:00000000000000000000000000000008",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"decision\":\"allow\",\"reason_code\":\"PERMISSION_GRANTED\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "0000000000000000000000000000001f",
+          "event_id": 4,
+          "event_type": "authorization_decision",
+          "previous_hash": "00000000000000000000000000000020",
+          "request_id": "request:00000000000000000000000000000008",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"action\":\"read\",\"resource\":\"ticket:T-100\"}",
+          "event_hash": "00000000000000000000000000000020",
+          "event_id": 3,
+          "event_type": "execution_dispatch",
+          "previous_hash": "00000000000000000000000000000021",
+          "request_id": "request:00000000000000000000000000000008",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"permissions\":[{\"action\":\"read\",\"resource\":\"ticket:T-100\"},{\"action\":\"update\",\"resource\":\"ticket:T-100\"}]}",
+          "event_hash": "00000000000000000000000000000021",
+          "event_id": 2,
+          "event_type": "grant_issued",
+          "previous_hash": "00000000000000000000000000000022",
+          "request_id": null,
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "details": "{\"actor\":\"agent:ticket-pilot\",\"initiator\":\"human:pilot-operator\"}",
+          "event_hash": "00000000000000000000000000000022",
+          "event_id": 1,
+          "event_type": "task_created",
+          "previous_hash": "",
+          "request_id": null,
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "timestamp": "2026-01-01T00:00:00+00:00"
+        }
+      ],
+      "executions": [
+        {
+          "request_id": "request:00000000000000000000000000000004",
+          "state": "denied",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "request_id": "request:00000000000000000000000000000005",
+          "state": "succeeded",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "request_id": "request:00000000000000000000000000000003",
+          "state": "succeeded",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "request_id": "request:00000000000000000000000000000006",
+          "state": "denied",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "request_id": "request:00000000000000000000000000000007",
+          "state": "denied",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "request_id": "request:00000000000000000000000000000008",
+          "state": "succeeded",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        }
+      ],
+      "grants": [
+        {
+          "expires_at": "2026-01-01T00:00:00+00:00",
+          "permissions": "read -> ticket:T-100, update -> ticket:T-100",
+          "principal": "agent:ticket-pilot",
+          "revoked": true,
+          "task_id": "task-pilot:db7b03d6bf4e"
+        }
+      ],
+      "requests": [
+        {
+          "action": "read",
+          "actor": "agent:ticket-pilot",
+          "decision": "deny",
+          "executed": 0,
+          "outcome": null,
+          "reason_code": "TASK_NOT_ACTIVE",
+          "request_id": "request:00000000000000000000000000000004",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "tool": "tool:tickets",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "read",
+          "actor": "agent:ticket-pilot",
+          "decision": "allow",
+          "executed": 1,
+          "outcome": "[redacted]",
+          "reason_code": "PERMISSION_GRANTED",
+          "request_id": "request:00000000000000000000000000000005",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "tool": "tool:tickets",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "update",
+          "actor": "agent:ticket-pilot",
+          "decision": "allow",
+          "executed": 1,
+          "outcome": "[redacted]",
+          "reason_code": "PERMISSION_GRANTED",
+          "request_id": "request:00000000000000000000000000000003",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "tool": "tool:tickets",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "delete",
+          "actor": "agent:ticket-pilot",
+          "decision": "deny",
+          "executed": 0,
+          "outcome": null,
+          "reason_code": "PERMISSION_NOT_GRANTED",
+          "request_id": "request:00000000000000000000000000000006",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "tool": "tool:tickets",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "read",
+          "actor": "agent:ticket-pilot",
+          "decision": "deny",
+          "executed": 0,
+          "outcome": null,
+          "reason_code": "PERMISSION_NOT_GRANTED",
+          "request_id": "request:00000000000000000000000000000007",
+          "resource": "ticket:T-200",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "tool": "tool:tickets",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        },
+        {
+          "action": "read",
+          "actor": "agent:ticket-pilot",
+          "decision": "allow",
+          "executed": 1,
+          "outcome": "[redacted]",
+          "reason_code": "PERMISSION_GRANTED",
+          "request_id": "request:00000000000000000000000000000008",
+          "resource": "ticket:T-100",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "tool": "tool:tickets",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        }
+      ],
+      "tasks": [
+        {
+          "actor": "agent:ticket-pilot",
+          "created_at": "2026-01-01T00:00:00+00:00",
+          "initiator": "human:pilot-operator",
+          "status": "revoked",
+          "task_id": "task-pilot:db7b03d6bf4e",
+          "updated_at": "2026-01-01T00:00:00+00:00"
+        }
+      ],
+      "upstream_authority": [
+        {
+          "action": "read",
+          "principal": "human:pilot-operator",
+          "resource": "ticket:T-100"
+        },
+        {
+          "action": "update",
+          "principal": "human:pilot-operator",
+          "resource": "ticket:T-100"
+        }
+      ]
+    }
+  },
+  "release_version": "0.14.1",
+  "example_note": "Synthetic recorded evaluation; identifiers and timestamps normalized for publication. Not runtime evidence."
+}

@@ -1,0 +1,9 @@
+{
+  "actions": {
+    "read": {"approval_required": false},
+    "summarize": {"approval_required": false},
+    "compare": {"approval_required": false},
+    "approve_payment": {"approval_required": true},
+    "delete": {"approval_required": true}
+  }
+}

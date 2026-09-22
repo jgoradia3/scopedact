@@ -1,0 +1,21 @@
+{
+  "initiator": "human:operator",
+  "actor": "agent:procurement",
+  "tool": "tool:invoice-service",
+  "grant_lifetime_minutes": 60,
+  "upstream_authority": [
+    {"action": "read", "resource": "invoice:123"},
+    {"action": "summarize", "resource": "invoice:123"},
+    {"action": "read", "resource": "purchase-order:456"},
+    {"action": "compare", "resource": "comparison:123-456"},
+    {"action": "approve_payment", "resource": "invoice:123"}
+  ],
+  "task_permissions": [
+    {"action": "read", "resource": "invoice:123"},
+    {"action": "summarize", "resource": "invoice:123"},
+    {"action": "read", "resource": "purchase-order:456"},
+    {"action": "compare", "resource": "comparison:123-456"},
+    {"action": "approve_payment", "resource": "invoice:123"}
+  ],
+  "approval_required_actions": ["approve_payment"]
+}

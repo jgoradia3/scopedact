@@ -1,0 +1,31 @@
+name: Integration feedback
+description: Tell us what happened when you protected a development tool
+title: "[Integration]: "
+labels: [feedback]
+body:
+  - type: dropdown
+    id: path
+    attributes:
+      label: Integration path
+      options: [Python SDK, HTTP service lab, AWS read-only connector, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: tool
+    attributes:
+      label: Tool and use case
+      description: Describe the non-production tool and action you tried to protect.
+    validations:
+      required: true
+  - type: textarea
+    id: friction
+    attributes:
+      label: What blocked or confused you?
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Did the authorization model solve a real problem?
+    validations:
+      required: true

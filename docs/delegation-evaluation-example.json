@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "checks": [
+    {
+      "name": "operator assigns parent task",
+      "passed": true
+    },
+    {
+      "name": "parent delegates read-only child grant",
+      "passed": true
+    },
+    {
+      "name": "child reads assigned ticket",
+      "passed": true
+    },
+    {
+      "name": "child cannot read another ticket",
+      "passed": true
+    },
+    {
+      "name": "child cannot update",
+      "passed": true
+    },
+    {
+      "name": "child cannot use parent grant",
+      "passed": true
+    },
+    {
+      "name": "delegation cannot add privilege",
+      "passed": true
+    },
+    {
+      "name": "delegation cannot add resource",
+      "passed": true
+    },
+    {
+      "name": "child cannot outlive parent",
+      "passed": true
+    },
+    {
+      "name": "child cannot create further delegation",
+      "passed": true
+    },
+    {
+      "name": "child cannot approve",
+      "passed": true
+    },
+    {
+      "name": "parent pause blocks child",
+      "passed": true
+    },
+    {
+      "name": "parent resume restores valid child scope",
+      "passed": true
+    },
+    {
+      "name": "parent performs next legitimate step",
+      "passed": true
+    },
+    {
+      "name": "revocation blocks next child step",
+      "passed": true
+    },
+    {
+      "name": "revocation blocks next parent step",
+      "passed": true
+    },
+    {
+      "name": "revoked parent cannot delegate",
+      "passed": true
+    },
+    {
+      "name": "lineage reconstructs human parent child tool",
+      "passed": true
+    },
+    {
+      "name": "delegated event chain verifies",
+      "passed": true
+    }
+  ],
+  "passed": 19,
+  "total": 19,
+  "task_id": "task-pilot:16ca1a493002",
+  "child_task_id": "task-child:08f2fe3b3045",
+  "lineage": {
+    "actions": [
+      {
+        "action": "read",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          },
+          {
+            "actor": "agent:diagnostic",
+            "delegation_id": "delegation:497b77534ad5",
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": "task-pilot:16ca1a493002",
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-child:08f2fe3b3045"
+          }
+        ],
+        "decision": "PERMISSION_GRANTED",
+        "delegation_id": "delegation:497b77534ad5",
+        "executed": true,
+        "grant_actor": "agent:diagnostic",
+        "initiator": "human:pilot-operator",
+        "outcome": "succeeded",
+        "parent_actor": "agent:ticket-pilot",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "request_id": "request:00000000000000000000000000000001",
+        "resource": "ticket:T-100",
+        "task_id": "task-child:08f2fe3b3045",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          },
+          {
+            "actor": "agent:diagnostic",
+            "delegation_id": "delegation:497b77534ad5",
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": "task-pilot:16ca1a493002",
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-child:08f2fe3b3045"
+          }
+        ],
+        "decision": "PERMISSION_NOT_GRANTED",
+        "delegation_id": "delegation:497b77534ad5",
+        "executed": false,
+        "grant_actor": "agent:diagnostic",
+        "initiator": "human:pilot-operator",
+        "outcome": "not_dispatched",
+        "parent_actor": "agent:ticket-pilot",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "request_id": "request:00000000000000000000000000000002",
+        "resource": "ticket:T-200",
+        "task_id": "task-child:08f2fe3b3045",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "update",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          },
+          {
+            "actor": "agent:diagnostic",
+            "delegation_id": "delegation:497b77534ad5",
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": "task-pilot:16ca1a493002",
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-child:08f2fe3b3045"
+          }
+        ],
+        "decision": "PERMISSION_NOT_GRANTED",
+        "delegation_id": "delegation:497b77534ad5",
+        "executed": false,
+        "grant_actor": "agent:diagnostic",
+        "initiator": "human:pilot-operator",
+        "outcome": "not_dispatched",
+        "parent_actor": "agent:ticket-pilot",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "request_id": "request:00000000000000000000000000000003",
+        "resource": "ticket:T-100",
+        "task_id": "task-child:08f2fe3b3045",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          }
+        ],
+        "decision": "ACTOR_MISMATCH",
+        "delegation_id": null,
+        "executed": false,
+        "grant_actor": "agent:ticket-pilot",
+        "initiator": "human:pilot-operator",
+        "outcome": "not_dispatched",
+        "parent_actor": "human:pilot-operator",
+        "parent_task_id": null,
+        "request_id": "request:00000000000000000000000000000004",
+        "resource": "ticket:T-100",
+        "task_id": "task-pilot:16ca1a493002",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          },
+          {
+            "actor": "agent:diagnostic",
+            "delegation_id": "delegation:497b77534ad5",
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": "task-pilot:16ca1a493002",
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-child:08f2fe3b3045"
+          }
+        ],
+        "decision": "ANCESTOR_TASK_NOT_ACTIVE",
+        "delegation_id": "delegation:497b77534ad5",
+        "executed": false,
+        "grant_actor": "agent:diagnostic",
+        "initiator": "human:pilot-operator",
+        "outcome": "not_dispatched",
+        "parent_actor": "agent:ticket-pilot",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "request_id": "request:00000000000000000000000000000005",
+        "resource": "ticket:T-100",
+        "task_id": "task-child:08f2fe3b3045",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          },
+          {
+            "actor": "agent:diagnostic",
+            "delegation_id": "delegation:497b77534ad5",
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": "task-pilot:16ca1a493002",
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-child:08f2fe3b3045"
+          }
+        ],
+        "decision": "PERMISSION_GRANTED",
+        "delegation_id": "delegation:497b77534ad5",
+        "executed": true,
+        "grant_actor": "agent:diagnostic",
+        "initiator": "human:pilot-operator",
+        "outcome": "succeeded",
+        "parent_actor": "agent:ticket-pilot",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "request_id": "request:00000000000000000000000000000006",
+        "resource": "ticket:T-100",
+        "task_id": "task-child:08f2fe3b3045",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:ticket-pilot",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          }
+        ],
+        "decision": "PERMISSION_GRANTED",
+        "delegation_id": null,
+        "executed": true,
+        "grant_actor": "agent:ticket-pilot",
+        "initiator": "human:pilot-operator",
+        "outcome": "succeeded",
+        "parent_actor": "human:pilot-operator",
+        "parent_task_id": null,
+        "request_id": "request:00000000000000000000000000000007",
+        "resource": "ticket:T-100",
+        "task_id": "task-pilot:16ca1a493002",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:diagnostic",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          },
+          {
+            "actor": "agent:diagnostic",
+            "delegation_id": "delegation:497b77534ad5",
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": "task-pilot:16ca1a493002",
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-child:08f2fe3b3045"
+          }
+        ],
+        "decision": "ANCESTOR_INACTIVE",
+        "delegation_id": "delegation:497b77534ad5",
+        "executed": false,
+        "grant_actor": "agent:diagnostic",
+        "initiator": "human:pilot-operator",
+        "outcome": "not_dispatched",
+        "parent_actor": "agent:ticket-pilot",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "request_id": "request:00000000000000000000000000000008",
+        "resource": "ticket:T-100",
+        "task_id": "task-child:08f2fe3b3045",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      },
+      {
+        "action": "read",
+        "actor": "agent:ticket-pilot",
+        "authority_chain": [
+          {
+            "actor": "agent:ticket-pilot",
+            "delegation_id": null,
+            "expires_at": "2026-01-01T00:00:00+00:00",
+            "initiator": "human:pilot-operator",
+            "parent_task_id": null,
+            "permissions": [
+              {
+                "action": "read",
+                "resource": "ticket:T-100"
+              },
+              {
+                "action": "update",
+                "resource": "ticket:T-100"
+              }
+            ],
+            "task_id": "task-pilot:16ca1a493002"
+          }
+        ],
+        "decision": "TASK_NOT_ACTIVE",
+        "delegation_id": null,
+        "executed": false,
+        "grant_actor": "agent:ticket-pilot",
+        "initiator": "human:pilot-operator",
+        "outcome": "not_dispatched",
+        "parent_actor": "human:pilot-operator",
+        "parent_task_id": null,
+        "request_id": "request:00000000000000000000000000000009",
+        "resource": "ticket:T-100",
+        "task_id": "task-pilot:16ca1a493002",
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "tool": "tool:tickets"
+      }
+    ],
+    "initiator": "human:pilot-operator",
+    "nodes": [
+      {
+        "actor": "agent:diagnostic",
+        "delegation_id": "delegation:497b77534ad5",
+        "expires_at": "2026-01-01T00:00:00+00:00",
+        "grant_revoked": false,
+        "initiator": "human:pilot-operator",
+        "parent_task_id": "task-pilot:16ca1a493002",
+        "permissions": [
+          {
+            "action": "read",
+            "resource": "ticket:T-100"
+          }
+        ],
+        "task_id": "task-child:08f2fe3b3045",
+        "task_status": "active"
+      },
+      {
+        "actor": "agent:ticket-pilot",
+        "delegation_id": null,
+        "expires_at": "2026-01-01T00:00:00+00:00",
+        "grant_revoked": true,
+        "initiator": "human:pilot-operator",
+        "parent_task_id": null,
+        "permissions": [
+          {
+            "action": "read",
+            "resource": "ticket:T-100"
+          },
+          {
+            "action": "update",
+            "resource": "ticket:T-100"
+          }
+        ],
+        "task_id": "task-pilot:16ca1a493002",
+        "task_status": "revoked"
+      }
+    ],
+    "note": "Lineage comes from stored grants and authenticated role keys, not caller-supplied parent labels.",
+    "root_task_id": "task-pilot:16ca1a493002",
+    "schema_version": 1
+  },
+  "limitations": [
+    "Scripted proposals, no live model.",
+    "Role keys identify possession, not corporate identities.",
+    "One-parent, one-child-hop pilot; no novel graph mechanism.",
+    "Revocation denies subsequent actions; it does not cancel in-flight work."
+  ],
+  "release_version": "0.14.1",
+  "example_note": "Synthetic recorded evaluation; identifiers and timestamps normalized for publication. Not runtime evidence."
+}
