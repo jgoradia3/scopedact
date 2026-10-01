@@ -21,6 +21,6 @@
 | Distributed cancellation/HA | Planned | Current revocation does not cancel in-flight actions or coordinate multiple gateway instances |
 | Privilege-drift observation | Planned | Separate observational/shadow module, not current enforcement behavior |
 | Real ticketing/cloud adapters | Planned | No Jira, ServiceNow, or multi-cloud production integration |
-| Hosted public CI | Configured, not verified here | Workflow included; requires publication and successful hosted execution |
+| Hosted public CI | Verified for initial publication | [Run 35798797312](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed Python 3.10–3.13 and the Docker pilot job; see Actions for current status |
 
 Implemented is not equivalent to production-ready, independently reviewed, or adopted. See VALIDATION_0.14.1.md for checks actually performed.

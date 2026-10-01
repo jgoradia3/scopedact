@@ -6,3 +6,4 @@ include compose.pilot.yaml
 recursive-include pilot *.py Dockerfile
 recursive-include docs *.json
 recursive-include tools *.py
+recursive-include docs/images *.png

@@ -1,6 +1,6 @@
 # Public review release checklist — v0.14.1
 
-The ZIP is a local review artifact. Publishing it, enabling private vulnerability reporting, and verifying hosted CI are separate steps that have not been performed here.
+The source is now public and the [initial hosted CI run](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed. The reviewed ZIP remains a local artifact. A version tag, GitHub Release, and private vulnerability-reporting setup have not been verified. The checklist below remains a guide for completing publication.
 
 1. Upload the clean source tree to the intended repository. Exclude runtime secrets, SQLite databases, generated evaluation output, environments, build directories, and caches.
 2. Follow [the reviewer guide](REVIEW_GUIDE.md) from a fresh environment and record the release checksum.

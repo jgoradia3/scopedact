@@ -1,20 +1,53 @@
 # ScopedAct
 
-### Task-scoped authority for agent tool workflows
+## Give agents a task—not unrestricted access.
 
-ScopedAct independently checks what an agent may do, narrows authority when a task is delegated, requires approval for sensitive actions, and records what was requested and executed.
+ScopedAct checks agent tool requests before they execute. Keep permissions limited to the task, require approval for sensitive changes, and see who did what—even when work is delegated.
 
-**v0.14.1 developer preview.** The included ticket pilot uses real HTTP calls, separately authenticated primary/child agent roles, and synthetic tickets. Proposals are scripted; no paid model or cloud account is required.
+[![Tests](https://github.com/jgoradia3/scopedact/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/jgoradia3/scopedact/actions/workflows/tests.yml)
 
-[Vision](VISION.md) · [Reviewer guide](docs/REVIEW_GUIDE.md) · [Capability status](docs/CAPABILITIES.md) · [Validation](docs/VALIDATION_0.14.1.md) · [CI configuration](.github/workflows/tests.yml)
+**[See the walkthrough](#see-it-in-action)** · **[Run the pilot](#try-it-locally)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
 
-ScopedAct is an experimental reference implementation for task-scoped authority and accountable tool access. Its scope excludes identity-provider services, prompt-injection detection, and production IAM. It is not a complete solution for autonomous-agent security.
+## One assignment should not unlock every action
 
-## Start here
+“Investigate ticket T-100” should give an agent access to that ticket—not every customer record. A helper should receive only the permissions it needs. A proposed change should wait when human approval is required.
 
-From the extracted repository root, with Python 3.10+ and Docker Compose:
+ScopedAct puts those boundaries in a gateway between the agent and the protected tool. The included support-ticket pilot lets you inspect the behavior with synthetic data, without a cloud account or a paid model.
+
+## See it in action
+
+An operator assigns T-100 to a primary agent. The primary delegates read-only access to a diagnostic child. Here is what happens when they request tool actions:
+
+![Recorded synthetic pilot: assigned read allowed, another ticket blocked, update held for approval, and reviewed update executed](docs/images/pilot-decisions.png)
+
+*Actual pilot API responses, shown in a read-only documentation report. This is a scripted demonstration with synthetic tickets, not a product dashboard or live-model integration. [How these screenshots were captured](docs/SCREENSHOTS.md).*
+
+Delegation also leaves a trail. The report below links the operator, primary, and child to recorded actions. After the operator revokes the parent’s authority, the child’s next request is denied.
+
+![Recorded lineage from operator to primary and child, including a child request denied after parent revocation](docs/images/pilot-lineage.png)
+
+*Revocation prevents subsequent protected actions. It does not cancel or undo operations already in flight.*
+
+## What your team can evaluate
+
+| Your question | What the pilot demonstrates |
+|---|---|
+| Can we limit access to this task? | Exact action/record permissions with an expiration time. |
+| Can a helper inherit less access? | A child grant must fit within its parent's permissions and lifetime. |
+| Can we review a change before it happens? | Approval of the exact proposed update, with a separate operator role. |
+| Can we stop further activity? | Pause or revoke authority; subsequent child actions recheck the parent. |
+| Can we tell what happened? | Recorded callers, decisions, tool outcomes, and parent/child relationships. |
+| What if a tool response is lost? | Durable request tracking and backend receipts for operator reconciliation. |
+
+The pilot uses real HTTP calls and a fixed-route REST ticket connector. Docker isolates the supplied agent containers from the protected backend. Those controls apply to the documented deployment; integrating another tool requires an adapter and its own validation.
+
+## Try it locally
+
+You need **Python 3.10+**, Git, and **Docker with Compose**. Use synthetic data.
 
 ```sh
+git clone https://github.com/jgoradia3/scopedact.git
+cd scopedact
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install .
@@ -25,77 +58,32 @@ scopedact-pilot evaluate-delegation --output pilot-results/delegation-evaluation
 python pilot/verify_isolation.py
 ```
 
-Run `init` once. For an existing v0.13 project, stop its services and run `scopedact-pilot init-child` to provision the new child key without replacing existing keys. See [upgrade details](docs/DELEGATION.md).
+Expected results: **17/17 ticket checks**, **19/19 delegation checks**, and successful isolation probes for both agent roles. These are defined workflow checks, not claims about every attack or deployment.
 
-The first evaluator exercises the original 17 ticket-workflow checks. The second exercises 19 delegation checks. Each evaluator is a **trusted test harness**, deliberately holding the roles needed to drive its scenarios; neither represents an untrusted agent. The isolated primary/child probe containers each receive only their own key.
+Run `init` once; it creates separate local keys. Existing v0.13 users should follow the [upgrade instructions](docs/DELEGATION.md#upgrade-from-v013). The evaluators are trusted test harnesses holding multiple role keys; the isolated agent probes each receive only their own key.
 
-## What the delegated workflow demonstrates
+For hands-on use, follow [ticket approval](docs/TICKET_PILOT.md) or [delegation and lineage](docs/DELEGATION.md). Stop services with `docker compose -f compose.pilot.yaml down`; volumes persist.
 
-1. An authenticated operator grants the primary agent read/update access to T-100.
-2. The primary agent delegates only read:T-100 to the diagnostic child agent.
-3. The child reads T-100 through ScopedAct and the fixed-route REST ticket connector.
-4. Child update attempts and access to T-200 are denied. The child cannot use the parent's grant or approve requests.
-5. Parent pause blocks child actions; resume restores otherwise-valid authority.
-6. Parent revocation denies subsequent parent and child actions during the workflow.
-7. A lineage report reconstructs the initiating operator, parent, child, grant bounds, requests, decisions, and tool outcomes.
+## Help test the boundaries
 
-```mermaid
-flowchart TD
-    H[Initiating human: operator role key] --> C[Authenticated control API]
-    P[Primary agent: own role key] --> G[ScopedAct gateway]
-    D[Diagnostic child: separate role key] --> G
-    C --> T[Task and delegation authority]
-    P -->|request read-only child grant| T
-    T -->|scope, expiry, ancestor status, approval| G
-    G --> R[Fixed-route REST connector]
-    R --> S[Protected synthetic ticket service]
-    G --> E[Decisions, execution evidence, lineage]
-    S --> I[Persistent idempotency receipts]
-```
+Security, IAM, and agent-platform engineers: try the pilot, challenge a control, and tell us what would make it useful in your environment. A reproducible finding about one behavior is valuable.
 
-HMAC establishes possession of a configured role key, not corporate human or workload identity. Authority is governed separately by stored grants. The pilot supports one parent-to-child hop and subset narrowing; it does not implement advanced graph analysis or semantic intent inference.
+Start with the **[Reviewer Guide](docs/REVIEW_GUIDE.md)**. Try an out-of-scope request, an approval substitution, or a child action after parent revocation. Include the commit, environment, commands, and expected versus observed behavior in your report. Use [Security reporting](SECURITY.md) for sensitive findings.
 
-## Manual review and evidence
+The [first hosted CI run](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed all four Python jobs (3.10–3.13) and the Docker pilot job, including isolation and restart checks. The suite contains **120 tests**; the SQLite ownership check reported **857 opened, zero unclosed** connections. See [validation details](docs/VALIDATION_0.14.1.md) and the live badge above for the current branch status.
 
-[Manual ticket approval](docs/TICKET_PILOT.md) · [Manual delegation](docs/DELEGATION.md)
+## Project status and scope
 
-```sh
-scopedact-pilot lineage --task-id 'COPY_PARENT_TASK_ID'
-scopedact-pilot lineage --task-id 'COPY_PARENT_TASK_ID' --json
-scopedact-pilot export --output pilot-results/evidence.json
-```
+**Current package: v0.14.1 · Developer preview for controlled evaluation.** This is a working reference implementation, not a production-ready service. The presentation update does not change the authorization engine or package version.
 
-Lineage is derived from authenticated callers and stored grant relationships. Default exports omit proposal bodies and read results. Local databases still retain plaintext content for review and reconciliation; use synthetic data.
+The ticket pilot uses scripted proposals and separately authenticated development roles using HMAC keys. Those keys prove possession of configured secrets, not enterprise workload identity. Live-model/MCP integration, OIDC, and real Jira, ServiceNow, or cloud adapters remain [roadmap items](docs/ROADMAP.md).
 
-## Security boundaries
+Local databases retain plaintext content; exports omit proposal bodies and read results but retain metadata. Event chains are not immutable third-party evidence. Keep evaluation interfaces on loopback. Read the [current limitations](docs/LIMITATIONS.md) and [pilot security boundaries](docs/PILOT_SECURITY.md) before running it.
 
-| Path | Boundary |
-|---|---|
-| Authenticated Docker ticket pilot | Separate primary, child, operator and tool keys; backend on private network; operator CLI |
-| Local non-Docker ticket pilot | Same protocol controls, without container network/process separation |
-| Older workspace console and labs | Local evaluation only; console has no user authentication |
-| Python SDK | Process-local integration with trusted caller identities; not an agent-code sandbox |
+## Explore the implementation
 
-The tested Docker network boundary prevents the included primary and child containers from reaching the protected ticket service by name or direct IP. It does not prove isolation for arbitrary agent deployments.
+[Architecture](docs/ARCHITECTURE.md) · [Capability matrix](docs/CAPABILITIES.md) · [Connector development](docs/CONNECTOR_DEVELOPMENT.md) · [Vision](VISION.md) · [Publication boundary](docs/PUBLICATION_BOUNDARY.md)
 
-Gateway evidence, ticket data, and idempotency receipts survive tested Docker service restarts. This does not imply replication or backups. Authority can be revoked during a workflow so **subsequent protected actions are denied**; in-flight calls are not canceled or undone.
+The [Python SDK](docs/SDK_INTEGRATION.md) and [older workspace application](docs/APPLICATION_GUIDE.md) are separate evaluation paths. The legacy workspace console lacks user authentication and is not the interface shown in these screenshots.
 
-Read the [pilot security model](docs/PILOT_SECURITY.md), [limitations](docs/LIMITATIONS.md), [publication boundary](docs/PUBLICATION_BOUNDARY.md), and [connector development contract](docs/CONNECTOR_DEVELOPMENT.md).
-
-## Development and review
-
-```sh
-python -m unittest discover -s tests -v
-python -m pip install build
-python -m build
-```
-
-GitHub Actions is configured for the Python matrix and both Docker evaluations, isolation probes, and restart checks. Hosted CI is not claimed to have run for this local release. Tests establish behavior only for their documented fixtures.
-
-Reviewer entry point: [REVIEW_GUIDE.md](docs/REVIEW_GUIDE.md). Release changes and response to feedback: [RELEASE_0.14.1.md](docs/RELEASE_0.14.1.md).
-
-The older workspace and SDK remain available: [application guide](docs/APPLICATION_GUIDE.md), [SDK integration](docs/SDK_INTEGRATION.md). MCP, real-model integrations, OIDC, structured intent constraints, policy-version binding, and cloud adapters are roadmap items, not current capabilities.
-
-Stop the pilot with `docker compose -f compose.pilot.yaml down`; volumes persist. Do not expose the loopback-published gateway or the legacy console publicly.
-
-[Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [Apache-2.0 license](LICENSE)
+[Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [License](LICENSE)

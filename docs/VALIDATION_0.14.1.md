@@ -21,3 +21,7 @@ The ownership checker retains and inspects in-process SQLite connections after t
 Reproduce using [the reviewer guide](REVIEW_GUIDE.md). The source includes normalized synthetic [ticket](pilot-evaluation-example.json) and [delegation](delegation-evaluation-example.json) examples; generated runtime directories, keys, and databases are excluded from the review ZIP.
 
 Python 3.10 and hosted GitHub Actions were not run here. The test configuration covers Python 3.10–3.13, but configuration alone is not a hosted success claim. No live model, MCP, enterprise identity provider, real ticket platform, production deployment, independent penetration test, or external adoption was validated. Restart checks do not establish backups or distributed consistency.
+
+## Publication follow-up — 2026-09-30
+
+The [hosted run for the published source](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) completed successfully on 2026-09-22 for commit `0c80e00394652aad3db3eff75e0fc940599bfeb9`: all Python 3.10–3.13 jobs and the Docker ticket-pilot job passed. This supersedes the pre-publication hosted-CI caveat above; the earlier local record is retained as history. Automated CI is not independent professional review.

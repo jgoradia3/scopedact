@@ -10,7 +10,7 @@ body:
     id: version
     attributes:
       label: ScopedAct and Python versions
-      placeholder: scopedact 0.10.0; Python 3.11
+      placeholder: scopedact 0.14.1; Python 3.11
     validations:
       required: true
   - type: textarea
