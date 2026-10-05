@@ -1,5 +1,46 @@
 # Current architecture — v0.14.1
 
+## Guided reviewer access (0.20.0)
+
+The trusted host launcher generates a one-time sign-in code; only its hash and
+expiry enter the gateway state directory. A same-origin exchange establishes an
+HttpOnly local operator session. The operator HMAC key never enters the browser.
+Signed agent clients remain separate and cannot use operator-only guided routes.
+
+The gateway coordinates fixed scenario setup and worker APIs. The scenario service
+can introduce only the declared local fault. The worker runs on the model network
+with the agent credential and a control credential, without backend keys or a Docker
+socket. Model requests still traverse the authorization gateway. Human approval and
+execution remain distinct actions, and recovery requires a fresh login check.
+
+Sessions and worker execution ownership are single-process local state. Gateway
+restart expires sessions. Worker restart marks an in-flight operation interrupted;
+it does not silently replay it. See [reviewer setup](REVIEWER_QUICKSTART.md).
+
+## Live incident lab (0.19.0)
+
+The live lab reuses task grants, approvals, lifecycle controls and the resource map.
+An isolated Ollama client sends signed requests to the gateway, which calls a fixed
+operations API. That API reaches the portal authentication service, which validates
+tokens issued by a separate synthetic identity service. Portal configuration,
+deployment history and mutation receipts are stored transactionally. Login checks
+produce fresh runtime events and separate gateway verification evidence.
+
+The gateway has an operations credential; the operations service has a portal
+credential; the agent has neither. Docker networks separate the agent/model,
+gateway-to-operations, operations-to-portal and portal-to-identity boundaries.
+Only the gateway is published on host loopback. The host/Docker administrator is
+trusted. The separately initiated child receives only log-read authority.
+
+The versioned document API is reused as a resource representation: `doc:` names
+and `read_document` calls in this lab refer to live service snapshots. No imported
+fixture is used to establish login failure or recovery. Details and limitations
+are in [the live lab guide](LIVE_INCIDENT_LAB.md). Earlier architectures follow.
+
+The v0.15.0 managed workspace adds an interactive task-authority map and operator controls.
+See [Workspace guide](WORKSPACE.md) for its workflow, architecture boundary, setup, and limitations.
+The ticket-pilot material below remains applicable to that separate workflow.
+
 The primary reference workflow is the authenticated synthetic ticket pilot. It separates the operator, primary agent, diagnostic child, authorization gateway, and protected ticket service. Separately authenticated development roles use HMAC keys; identity assurance is limited to possession of those configured secrets.
 
 ```mermaid

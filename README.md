@@ -4,9 +4,47 @@
 
 ScopedAct checks agent tool requests before they execute. Keep permissions limited to the task, require approval for sensitive changes, and see who did what—even when work is delegated.
 
-[![Tests](https://github.com/jgoradia3/scopedact/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/jgoradia3/scopedact/actions/workflows/tests.yml)
+> Review branch: local incident-lab stabilization. See [validation status and limitations](docs/STABILIZATION_REVIEW.md) before evaluating.
 
-**[See the walkthrough](#see-it-in-action)** · **[Run the pilot](#try-it-locally)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
+**[Run the live incident lab](docs/LIVE_INCIDENT_LAB.md)** · **[See the ticket example](#see-it-in-action)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
+
+## Try it locally
+
+With Python 3 and Docker Desktop installed, run this from the extracted repository:
+
+```bash
+python3 tools/start_review.py
+```
+
+The launcher starts the lab, prepares a local model, and opens a private, single-use
+sign-in link. **No file upload or cloud account.** First setup downloads model weights;
+later starts reuse them. In the console: **Choose an evaluation role → Start investigation → inspect recorded requests.**
+A permission denial pauses the runner. Continue with unchanged permissions or end the evaluation.
+If a repair is proposed, review it before applying and verifying recovery. [Reviewer instructions](docs/REVIEWER_QUICKSTART.md).
+
+## Investigate a real failure. Control the repair.
+
+The live Docker lab runs a staging portal authentication API, a test identity service,
+a protected operations API, and ScopedAct. A deployment configuration error actually
+breaks login. A local Ollama agent reads live evidence and proposes a repair; an
+operator reviews the exact change before it can execute. A fresh login check then
+records whether the service recovered.
+
+**[Start the live incident lab →](docs/LIVE_INCIDENT_LAB.md)**
+
+Follow the task through its agent, delegated diagnostic helper, resources and results.
+Inspect blocked requests, stop remaining authority, and reconcile uncertain outcomes.
+The small local model can make incorrect proposals: successful authorization does not
+establish correct reasoning. Review the evidence and verification result separately.
+
+This is a local security evaluation with synthetic users and real running services.
+It does not connect to production, provide enterprise workload identity, or detect
+arbitrary semantic intent drift. The helper is explicitly initiated, not autonomously
+spawned. [Research behind the design](docs/RESEARCH_TO_IMPLEMENTATION.md).
+
+**[Document-fixture evaluation](docs/INCIDENT_EVALUATION.md)** ·
+**[Workspace setup](docs/WORKSPACE.md)** · **[Local agent](docs/LOCAL_AGENT.md)** ·
+**[Document discovery](docs/DOCUMENT_DISCOVERY.md)**
 
 ## One assignment should not unlock every action
 
@@ -70,11 +108,11 @@ Security, IAM, and agent-platform engineers: try the pilot, challenge a control,
 
 Start with the **[Reviewer Guide](docs/REVIEW_GUIDE.md)**. Try an out-of-scope request, an approval substitution, or a child action after parent revocation. Include the commit, environment, commands, and expected versus observed behavior in your report. Use [Security reporting](SECURITY.md) for sensitive findings.
 
-The [first hosted CI run](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed all four Python jobs (3.10–3.13) and the Docker pilot job, including isolation and restart checks. The suite contains **120 tests**; the SQLite ownership check reported **857 opened, zero unclosed** connections. See [validation details](docs/VALIDATION_0.14.1.md) and the live badge above for the current branch status.
+The [first hosted CI run](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed all four Python jobs (3.10–3.13) and the Docker pilot job, including isolation and restart checks. The original v0.14.1 suite contained **120 tests**; the SQLite ownership check reported **857 opened, zero unclosed** connections. See [validation details](docs/VALIDATION_0.14.1.md) and the live badge above for the current branch status.
 
 ## Project status and scope
 
-**Current package: v0.14.1 · Developer preview for controlled evaluation.** This is a working reference implementation, not a production-ready service. The presentation update does not change the authorization engine or package version.
+**Current package: v0.20.0 · Developer preview for controlled evaluation.** This is a working reference implementation, not a production-ready service. The live incident lab adds real authentication services, an isolated local agent, and verified recovery while retaining the workspace and ticket evaluations. See [live-lab validation](docs/LIVE_LAB_VALIDATION.md) and [reviewer-experience validation](docs/REVIEWER_VALIDATION.md).
 
 The ticket pilot uses scripted proposals and separately authenticated development roles using HMAC keys. Those keys prove possession of configured secrets, not enterprise workload identity. Live-model/MCP integration, OIDC, and real Jira, ServiceNow, or cloud adapters remain [roadmap items](docs/ROADMAP.md).
 

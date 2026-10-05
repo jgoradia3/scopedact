@@ -1,0 +1,15 @@
+{
+  "status": "verified",
+  "task_id": "task-workspace:a5c1dd8fb776",
+  "job_id": "213d5c46fe474692973c87e8cb7e188e",
+  "model_calls": 2,
+  "verification": {
+    "checked_at": "2026-10-03T22:08:57.893745+00:00",
+    "config_version": 7,
+    "http_status": 200,
+    "passed": true,
+    "reason": "accepted",
+    "synthetic_user": true
+  },
+  "evaluation": "Maintainer local guided API test; real Ollama model; automated test operator approval"
+}

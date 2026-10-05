@@ -1,5 +1,9 @@
 # Capability status — v0.14.1
 
+The v0.15.0 managed workspace adds an interactive task-authority map and operator controls.
+See [Workspace guide](WORKSPACE.md) for its workflow, architecture boundary, setup, and limitations.
+The ticket-pilot material below remains applicable to that separate workflow.
+
 | Capability | Status | Actual scope |
 |---|---|---|
 | Task-scoped authority | Implemented | Exact action/resource pairs in expiring task grants |

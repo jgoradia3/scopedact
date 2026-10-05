@@ -15,3 +15,14 @@ audit/*.json
 !audit/sample_audit.jsonl
 .scopedact-pilot/
 pilot-results/
+
+.scopedact-workspace/
+workspace-results/
+
+agent-runs/
+
+.incident-review/
+incident-evidence.json
+incident-agent-run.json
+
+.scopedact-lab/

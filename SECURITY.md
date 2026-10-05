@@ -7,3 +7,9 @@ The legacy workspace console has no user authentication. The procurement lab inc
 For non-sensitive defects, open a minimal GitHub issue with the version, expected behavior, and synthetic reproducer. For sensitive findings, use GitHub's private vulnerability reporting only if it is enabled on the published repository. If no private channel is available, request a private contact route without posting exploit details or secrets. Private reporting and hosted security support have not been verified for this local release.
 
 No production-service SLA or security-support commitment is provided.
+
+## Managed workspace
+
+See [workspace security boundaries](docs/WORKSPACE.md#evidence-semantics-and-limits).
+Keep the console on loopback. Agent containers must not mount workspace state, operator keys,
+or the Docker socket. Imported documents, proposals, and historical versions are plaintext.

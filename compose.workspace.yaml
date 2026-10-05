@@ -1,0 +1,47 @@
+services:
+  gateway:
+    build: .
+    entrypoint: ["scopedact-workspace"]
+    command: ["--directory", "/state", "serve", "--container"]
+    ports:
+      - "127.0.0.1:8890:8890"
+    volumes:
+      - ./.scopedact-workspace:/state
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [workspace, console]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8890/health',timeout=2).close()"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  agent-probe:
+    build: .
+    profiles: ["verify"]
+    entrypoint: ["python", "/app/tools/verify_workspace_boundary.py"]
+    environment:
+      SCOPEDACT_AGENT_ROLE: agent
+    volumes:
+      - ./.scopedact-workspace/secrets/agent.key:/run/agent.key:ro
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [workspace]
+  child-probe:
+    build: .
+    profiles: ["verify"]
+    entrypoint: ["python", "/app/tools/verify_workspace_boundary.py"]
+    environment:
+      SCOPEDACT_AGENT_ROLE: child
+    volumes:
+      - ./.scopedact-workspace/secrets/child.key:/run/agent.key:ro
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [workspace]
+networks:
+  console: {}
+  workspace:
+    internal: true

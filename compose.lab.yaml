@@ -1,0 +1,171 @@
+x-service: &service
+  build: .
+  entrypoint: [scopedact-lab]
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  healthcheck:
+    test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=2).close()"]
+    interval: 3s
+    timeout: 3s
+    retries: 20
+services:
+  identity:
+    <<: *service
+    command: [serve, identity]
+    environment:
+      LAB_IDENTITY_KEY_FILE: /run/identity.key
+      LAB_SIGNING_KEY_FILE: /run/signing.key
+    volumes:
+      - ./.scopedact-lab/secrets/identity.key:/run/identity.key:ro
+      - ./.scopedact-lab/secrets/signing.key:/run/signing.key:ro
+    networks: [identity]
+  portal:
+    <<: *service
+    command: [--directory, /state, serve, portal]
+    environment:
+      LAB_PORTAL_KEY_FILE: /run/portal.key
+      LAB_IDENTITY_KEY_FILE: /run/identity.key
+      LAB_SIGNING_KEY_FILE: /run/signing.key
+      LAB_FAULT_KEY_FILE: /run/fault.key
+    volumes:
+      - ./.scopedact-lab/portal:/state
+      - ./.scopedact-lab/secrets/portal.key:/run/portal.key:ro
+      - ./.scopedact-lab/secrets/identity.key:/run/identity.key:ro
+      - ./.scopedact-lab/secrets/signing.key:/run/signing.key:ro
+      - ./.scopedact-lab/secrets/fault.key:/run/fault.key:ro
+    networks: [identity, backend]
+    depends_on:
+      identity: {condition: service_healthy}
+  operations:
+    <<: *service
+    command: [serve, operations]
+    environment:
+      LAB_OPERATIONS_KEY_FILE: /run/operations.key
+      LAB_PORTAL_KEY_FILE: /run/portal.key
+    volumes:
+      - ./.scopedact-lab/secrets/operations.key:/run/operations.key:ro
+      - ./.scopedact-lab/secrets/portal.key:/run/portal.key:ro
+    networks: [backend, enforcement]
+    depends_on:
+      portal: {condition: service_healthy}
+  gateway:
+    <<: *service
+    command: [--directory, /state, serve, gateway, --port, '8891']
+    ports: ['127.0.0.1:8891:8891']
+    environment:
+      LAB_GUIDED_REVIEW: '1'
+      LAB_REVIEWER-CONTROL_KEY_FILE: /run/reviewer-control.key
+      LAB_OPERATIONS_KEY_FILE: /run/operations.key
+      LAB_AGENT_KEY_FILE: /run/agent.key
+      LAB_CHILD_KEY_FILE: /run/child.key
+      LAB_OPERATOR_KEY_FILE: /run/operator.key
+    volumes:
+      - ./.scopedact-lab/gateway:/state
+      - ./.scopedact-lab/secrets/reviewer-control.key:/run/reviewer-control.key:ro
+      - ./.scopedact-lab/secrets/operations.key:/run/operations.key:ro
+      - ./.scopedact-lab/secrets/agent.key:/run/agent.key:ro
+      - ./.scopedact-lab/secrets/child.key:/run/child.key:ro
+      - ./.scopedact-lab/secrets/operator.key:/run/operator.key:ro
+    networks: [enforcement, agents, console]
+    depends_on:
+      operations: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8891/health',timeout=2).close()"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  scenario:
+    <<: *service
+    command: [serve, scenario]
+    environment:
+      LAB_REVIEWER-CONTROL_KEY_FILE: /run/reviewer-control.key
+      LAB_PORTAL_KEY_FILE: /run/portal.key
+      LAB_FAULT_KEY_FILE: /run/fault.key
+    volumes:
+      - ./.scopedact-lab/secrets/reviewer-control.key:/run/reviewer-control.key:ro
+      - ./.scopedact-lab/secrets/portal.key:/run/portal.key:ro
+      - ./.scopedact-lab/secrets/fault.key:/run/fault.key:ro
+    networks: [backend, enforcement]
+    depends_on:
+      portal: {condition: service_healthy}
+  reviewer-worker:
+    <<: *service
+    profiles: [agent]
+    command: [--directory, /journal, serve, worker, --port, '11235']
+    network_mode: service:model
+    environment:
+      LAB_REVIEWER-CONTROL_KEY_FILE: /run/reviewer-control.key
+      LAB_AGENT_KEY_FILE: /run/agent.key
+    volumes:
+      - ./.scopedact-lab/secrets/reviewer-control.key:/run/reviewer-control.key:ro
+      - ./.scopedact-lab/secrets/agent.key:/run/agent.key:ro
+      - ./.scopedact-lab/reviewer-journal:/journal
+    depends_on:
+      model: {condition: service_started}
+      gateway: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:11235/health',timeout=2).close()"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  inject-fault:
+    <<: *service
+    profiles: [tools]
+    command: [inject-fault]
+    healthcheck: {disable: true}
+    environment:
+      LAB_PORTAL_KEY_FILE: /run/portal.key
+      LAB_FAULT_KEY_FILE: /run/fault.key
+    volumes:
+      - ./.scopedact-lab/secrets/portal.key:/run/portal.key:ro
+      - ./.scopedact-lab/secrets/fault.key:/run/fault.key:ro
+    networks: [backend]
+  model:
+    image: ollama/ollama@sha256:2a6e883b917fc543389599dae79918f5cac9e1438890506982f44aa4f5625d01
+    profiles: [agent]
+    environment: {OLLAMA_NO_CLOUD: '1', OLLAMA_NUM_PARALLEL: '1', OLLAMA_HOST: '127.0.0.1:11434'}
+    volumes: [models:/root/.ollama]
+    networks: [agents]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  agent:
+    <<: *service
+    profiles: [agent]
+    healthcheck: {disable: true}
+    command: [--directory, /assignment, --gateway, 'http://gateway:8891', agent]
+    network_mode: service:model
+    environment:
+      LAB_AGENT_KEY_FILE: /run/agent.key
+    volumes:
+      - ./.scopedact-lab/task.json:/assignment/task.json:ro
+      - ./.scopedact-lab/secrets/agent.key:/run/agent.key:ro
+      - ./.scopedact-lab/journal:/journal
+    depends_on:
+      model: {condition: service_started}
+      gateway: {condition: service_healthy}
+  child-agent:
+    <<: *service
+    profiles: [agent]
+    healthcheck: {disable: true}
+    command: [--directory, /assignment, --gateway, 'http://gateway:8891', agent, --role, child, --state, /journal/child.json]
+    network_mode: service:model
+    environment:
+      LAB_CHILD_KEY_FILE: /run/child.key
+    volumes:
+      - ./.scopedact-lab/child-task.json:/assignment/child-task.json:ro
+      - ./.scopedact-lab/secrets/child.key:/run/child.key:ro
+      - ./.scopedact-lab/child-journal:/journal
+    depends_on:
+      model: {condition: service_started}
+      gateway: {condition: service_healthy}
+networks:
+  identity: {internal: true}
+  backend: {internal: true}
+  enforcement: {internal: true}
+  agents: {internal: true}
+  console: {}
+volumes:
+  models:
+    name: ${SCOPEDACT_MODEL_VOLUME:-scopedact-lab-models}

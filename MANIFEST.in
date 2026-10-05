@@ -7,3 +7,11 @@ recursive-include pilot *.py Dockerfile
 recursive-include docs *.json
 recursive-include tools *.py
 recursive-include docs/images *.png
+include compose.workspace.yaml
+recursive-include src/scopedact/workspace/static *.html *.css *.js
+
+recursive-include src/scopedact/workspace/fixtures *.json
+
+include compose.lab.yaml Dockerfile
+
+include tools/start_review.py

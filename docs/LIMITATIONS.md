@@ -1,5 +1,29 @@
 # Current limitations — v0.14.1
 
+## Guided reviewer experience
+
+The live lab now uses short-lived local console sessions rather than browser-held
+operator keys. This is local HTTP development authentication, not public hosting or
+enterprise sign-in. The welcome screen has been visually inspected; signed-in UI
+validation remains incomplete. Scenario setup is deliberately privileged and only
+operator-accessible. Worker failures and uncertain operations require inspection.
+The optional delegated helper and advanced recovery still use terminal commands.
+
+## Live incident lab
+
+The [live lab](LIVE_INCIDENT_LAB.md) adds isolated local HTTP services and model-driven
+requests. It uses synthetic users and shared HMAC development credentials. It is a
+small authentication API, not an enterprise IdP or full portal. The current model
+can propose incorrect changes or stop without proposing; approval and fresh service
+verification remain separate requirements. The diagnostic helper is explicitly
+initiated. No production connection, automatic semantic drift detection or universal
+rollback is provided. Backend timeout behavior is tested with real local HTTP calls.
+
+
+The v0.15.0 managed workspace adds an interactive task-authority map and operator controls.
+See [Workspace guide](WORKSPACE.md) for its workflow, architecture boundary, setup, and limitations.
+The ticket-pilot material below remains applicable to that separate workflow.
+
 These boundaries apply to the named components in this release. The [capability matrix](CAPABILITIES.md) distinguishes implemented controls from planned integrations.
 
 ## Authenticated ticket pilot limitations

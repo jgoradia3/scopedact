@@ -1,4 +1,19 @@
-# Focused reviewer guide — v0.14.1
+# Security reviewer guide
+
+For the latest live-service workflow, start with the [incident lab](LIVE_INCIDENT_LAB.md).
+Keep model success, enforcement correctness and independent review findings separate.
+
+Start with the [staging authentication incident evaluation](INCIDENT_EVALUATION.md).
+It provides a concrete investigation, a permission matrix, deliberate negative tests,
+expected outcomes, and a results worksheet. The primary questions are whether the agent
+stays within its assigned resources, whether approval and later intervention compose
+correctly, and whether the map supports reconstruction of what happened.
+
+The scripted harness is repeatable test equipment, not evidence of autonomous reasoning
+or external adoption. A separate optional local-model path is documented in that guide.
+Use synthetic resources first and report actual observations in your own words.
+
+## Earlier support-ticket evaluation
 
 Evaluate the documented synthetic pilot, not a production system. No cloud credentials or paid model are needed.
 

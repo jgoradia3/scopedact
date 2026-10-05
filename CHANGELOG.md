@@ -1,5 +1,32 @@
 # v0.14.1 — Review-release cleanup
 
+## 0.20.0 — Guided local review
+
+- One-command launcher prepares Docker and the local model.
+- Short-lived, single-use sign-in links replace key-file selection in the live lab.
+- HttpOnly local sessions keep operator signing keys out of the browser.
+- Guided controls launch an isolated worker, review exact proposals, apply approved changes and verify recovery.
+- Automatic activity refresh, plain-language welcome and explicit local-data explanation.
+- Existing signed clients and the older workspace remain supported.
+
+## 0.19.0 — Live incident-response lab
+
+- Separate Docker identity, portal and operations services with real token validation and runtime events.
+- Constrained, version-bound configuration repair with atomic receipts and fresh login verification.
+- Isolated Ollama investigator and separately initiated read-only diagnostic helper.
+- Console resource labels and explicit service verification results.
+- HTTP timeout/reconciliation tests, Docker boundary probes, reviewer guide and research mapping.
+- Earlier document and ticket evaluations remain supported.
+
+## 0.15.0 — Managed workspace investigation
+
+- Added task creation, grouped activity map, filtered evidence timeline and metadata export.
+- Added browser HMAC operator login, exact replacement review, pause/resume/revoke and receipt reconciliation.
+- Added versioned managed text documents with atomic mutation/history/receipt persistence.
+- Added scripted agent/helper workflow, operator import and historical export, container boundary probes.
+- Reused the existing gateway and constrained delegation; ticket defaults remain unchanged.
+- Added security and recovery tests. This is local evaluation software, not host-wide monitoring.
+
 - Close SQLite connections explicitly and check ownership in CI.
 - Verify approved child updates remain blocked after parent pause/revocation.
 - Rewrite current architecture and limitations, and clarify release/publication status.
@@ -28,6 +55,30 @@
 - Add security regressions and reviewer documentation.
 
 # Changelog
+
+## 0.18.0
+
+- Replace the public placeholder lookup example with the STG-AUTH-204 security evaluation.
+- Package coherent synthetic alert, event, deployment, runbook and restricted-resource fixtures.
+- Add a scripted, reviewer-controlled incident harness and approval/intervention experiments.
+- Separate repeatable enforcement checks from optional live-model analysis and external integration claims.
+
+
+## 0.17.0
+
+- Clarify console task navigation, current decisions, historical attempts, and change results.
+- Add permission-filtered document-name lookup and explicit operator selection for ambiguous matches.
+- Recheck current authority after selection; expose the flow to local agents and a deterministic find command.
+- Document local scope separately from unimplemented AWS and folder-level integrations.
+
+
+## 0.16.0
+
+- Add a bounded local Ollama tool-calling agent for managed-document investigations.
+- Separate operator task creation from the agent-only runner.
+- Persist exact proposals for approval retries; stop on denial or uncertain outcomes.
+- Add real-gateway runner regression tests and a local-agent evaluation guide.
+
 
 ## 0.11.0 - 2026-08-19
 

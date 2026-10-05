@@ -13,3 +13,14 @@ build
 .scopedact-pilot
 **/*.key
 pilot-results
+
+.scopedact-workspace/
+workspace-results/
+
+agent-runs/
+
+.incident-review/
+incident-evidence.json
+incident-agent-run.json
+
+.scopedact-lab/
