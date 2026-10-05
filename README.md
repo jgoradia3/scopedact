@@ -6,7 +6,15 @@ ScopedAct checks agent tool requests before they execute. Keep permissions limit
 
 [![Tests](https://github.com/jgoradia3/scopedact/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/jgoradia3/scopedact/actions/workflows/tests.yml)
 
-**[See the walkthrough](#see-it-in-action)** · **[Run the pilot](#try-it-locally)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
+**[See the ticket screenshots](#see-it-in-action)** · **[Run the pilot](#try-it-locally)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
+
+## Watch the demo video
+
+**[▶ Watch or download the narrated demo — MP4, 3 minutes](https://github.com/jgoradia3/scopedact/raw/b11c41d050d5d0566622af62117fd35c6f4111e3/docs/media/scopedact-walkthrough.mp4)**
+
+Male-voice walkthrough of the incident console, activity map, and blocked agent request. This edited video uses actual saved console views; it is not a continuous live recording.
+
+The video shows the newer [incident-lab review branch](https://github.com/jgoradia3/scopedact/tree/codex/incident-lab-stabilization), which has not yet been merged into this branch. [Setup and transcript](https://github.com/jgoradia3/scopedact/blob/codex/incident-lab-stabilization/docs/DEMO_VIDEO.md).
 
 ## One assignment should not unlock every action
 
