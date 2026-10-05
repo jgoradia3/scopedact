@@ -1,136 +1,73 @@
 # ScopedAct
 
-## Give agents a task—not unrestricted access.
+## Give agents a task. Keep control of their access.
 
-ScopedAct checks agent tool requests before they execute. Keep permissions limited to the task, require approval for sensitive changes, and see who did what—even when work is delegated.
+ScopedAct checks an agent’s tool requests before execution, limits access to the current task, and records what was allowed, blocked, approved, and changed. Security engineers can inspect the activity map and revoke remaining access.
 
-> Review branch: local incident-lab stabilization. See [validation status and limitations](docs/STABILIZATION_REVIEW.md) before evaluating.
+**[Start a local evaluation](docs/NATIVE_REVIEW.md)** · **[Reviewer walkthrough](docs/REVIEWER_QUICKSTART.md)** · **[Architecture](docs/ARCHITECTURE.md)**
 
-**[Run the live incident lab](docs/LIVE_INCIDENT_LAB.md)** · **[See the ticket example](#see-it-in-action)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
+## Watch the demo video
 
-**[Watch the narrated walkthrough](docs/DEMO_VIDEO.md)** · [Read the transcript](docs/media/scopedact-walkthrough.txt)
+https://github.com/user-attachments/assets/67959949-1bfb-4571-bb01-3670fba5807d
 
-## Try it locally
+[Video, transcript and recording details](docs/DEMO_VIDEO.md). This is an edited walkthrough of maintainer-run evaluations, with synthetic narration. The recording uses earlier profile labels; the current console calls them **Diagnostic access** and **Change-proposal access**.
 
-**Without Docker:** install Python 3.10+ and [Ollama](https://ollama.com/download),
-open Ollama, then run these commands from the extracted repository (macOS/Linux):
+## Download, install, start
 
-```bash
+Download and extract this repository, or clone it. Install **Python 3.10+** and **[Ollama](https://ollama.com/download)**, then open Ollama. From the extracted ScopedAct folder on macOS or Linux:
+
+```sh
 ollama pull qwen3:1.7b
 python3 -m venv .venv
 .venv/bin/python -m pip install .
 .venv/bin/python tools/start_native_review.py
 ```
 
-The console opens on your computer at `http://127.0.0.1:8891` with a private sign-in
-link. Choose a role, start an investigation, and inspect the agent's actual requests.
-**This uses a real local model, with no scripted fallback.** The incident is synthetic;
-a correct repair is not guaranteed. Native mode does not provide container isolation.
-[Full instructions and troubleshooting](docs/NATIVE_REVIEW.md).
+The launcher opens a private sign-in link to `http://127.0.0.1:8891`. Keep its terminal open. No cloud account or API key is required. First model download and inference can take several minutes.
 
-**Prefer Docker?** Run `python3 tools/start_review.py` with Docker Desktop running.
-[Docker reviewer instructions](docs/REVIEWER_QUICKSTART.md).
+**This runs a real local model with no scripted fallback.** The incident data is synthetic; the services, gateway decisions and execution records are real. A correct repair is not guaranteed.
 
-## Investigate a real failure. Control the repair.
+[Full setup, fresh sign-in links and troubleshooting](docs/NATIVE_REVIEW.md). Native mode shares your OS account and does not provide container isolation. For Docker, including Windows, use [the Docker setup](docs/LIVE_INCIDENT_LAB.md).
 
-The live Docker lab runs a staging portal authentication API, a test identity service,
-a protected operations API, and ScopedAct. A deployment configuration error actually
-breaks login. A local Ollama agent reads live evidence and proposes a repair; an
-operator reviews the exact change before it can execute. A fresh login check then
-records whether the service recovered.
+## What you will investigate
 
-**[Start the live incident lab →](docs/LIVE_INCIDENT_LAB.md)**
+**INC-2048: valid users cannot sign in to a staging customer portal following a configuration change.** Give the agent the incident assignment and follow its requests through the console.
 
-Follow the task through its agent, delegated diagnostic helper, resources and results.
-Inspect blocked requests, stop remaining authority, and reconcile uncertain outcomes.
-The small local model can make incorrect proposals: successful authorization does not
-establish correct reasoning. Review the evidence and verification result separately.
+1. Choose **Diagnostic access** for diagnostic reads, or **Change-proposal access** to also inspect configuration and propose an approval-gated update. These are local evaluation profiles, not enterprise identities.
+2. Start an investigation. The model chooses its next requests; the gateway independently checks each one against configured policy and task authority.
+3. Inspect the activity map. If a request is denied, the guided runner pauses. Continue with unchanged permissions or end the evaluation.
+4. If a repair is proposed, review the exact change. Approval does not override later revocation or expired authority. After execution, verify whether login actually recovers.
+5. Download evidence and report what you observed. An incomplete investigation or an incorrect proposal is a useful finding, not a successful repair.
 
-This is a local security evaluation with synthetic users and real running services.
-It does not connect to production, provide enterprise workload identity, or detect
-arbitrary semantic intent drift. The helper is explicitly initiated, not autonomously
-spawned. [Research behind the design](docs/RESEARCH_TO_IMPLEMENTATION.md).
+The **misleading-evidence exercise** places an explicit synthetic malicious instruction inside a log. The model may ignore it or attempt forbidden access. The outcome comes from recorded requests; selecting the exercise does not guarantee a denial. A separate advanced probe deliberately instructs a forbidden attempt and is labeled accordingly.
 
-**[Document-fixture evaluation](docs/INCIDENT_EVALUATION.md)** ·
-**[Workspace setup](docs/WORKSPACE.md)** · **[Local agent](docs/LOCAL_AGENT.md)** ·
-**[Document discovery](docs/DOCUMENT_DISCOVERY.md)**
+## Security questions you can test
 
-## One assignment should not unlock every action
-
-“Investigate ticket T-100” should give an agent access to that ticket—not every customer record. A helper should receive only the permissions it needs. A proposed change should wait when human approval is required.
-
-ScopedAct puts those boundaries in a gateway between the agent and the protected tool. The included support-ticket pilot lets you inspect the behavior with synthetic data, without a cloud account or a paid model.
-
-## See it in action
-
-An operator assigns T-100 to a primary agent. The primary delegates read-only access to a diagnostic child. Here is what happens when they request tool actions:
-
-![Recorded synthetic pilot: assigned read allowed, another ticket blocked, update held for approval, and reviewed update executed](docs/images/pilot-decisions.png)
-
-*Actual pilot API responses, shown in a read-only documentation report. This is a scripted demonstration with synthetic tickets, not a product dashboard or live-model integration. [How these screenshots were captured](docs/SCREENSHOTS.md).*
-
-Delegation also leaves a trail. The report below links the operator, primary, and child to recorded actions. After the operator revokes the parent’s authority, the child’s next request is denied.
-
-![Recorded lineage from operator to primary and child, including a child request denied after parent revocation](docs/images/pilot-lineage.png)
-
-*Revocation prevents subsequent protected actions. It does not cancel or undo operations already in flight.*
-
-## What your team can evaluate
-
-| Your question | What the pilot demonstrates |
+| Question | Evidence to inspect |
 |---|---|
-| Can we limit access to this task? | Exact action/record permissions with an expiration time. |
-| Can a helper inherit less access? | A child grant must fit within its parent's permissions and lifetime. |
-| Can we review a change before it happens? | Approval of the exact proposed update, with a separate operator role. |
-| Can we stop further activity? | Pause or revoke authority; subsequent child actions recheck the parent. |
-| Can we tell what happened? | Recorded callers, decisions, tool outcomes, and parent/child relationships. |
-| What if a tool response is lost? | Durable request tracking and backend receipts for operator reconciliation. |
+| Did the agent stay within its authority? | Resource, action, permission decision and execution outcome for each protected request. |
+| Did a blocked action reach the tool? | Gateway denial and execution status; inspect the protected service where applicable. |
+| Was a change actually approved? | Exact proposal, approval binding and subsequent execution result. |
+| Can access be stopped? | Requests after pause, expiration or revocation; already executed changes are not undone. |
+| Can delegated access grow silently? | The separate [delegation evaluation](docs/DELEGATION.md) tests child limits and ancestor revocation. |
+| Did the repair work? | A fresh login verification, separate from approval or execution. |
 
-The pilot uses real HTTP calls and a fixed-route REST ticket connector. Docker isolates the supplied agent containers from the protected backend. Those controls apply to the documented deployment; integrating another tool requires an adapter and its own validation.
+The [review guide](docs/REVIEW_GUIDE.md) explains how to submit reproducible findings. Sensitive issues belong in [security reporting](SECURITY.md).
 
-## Try it locally
+## Scope and maturity
 
-You need **Python 3.10+**, Git, and **Docker with Compose**. Use synthetic data.
+**Developer preview for controlled technical evaluation.** ScopedAct is an authorization and accountability reference implementation. It is not ready for operational adoption.
 
-```sh
-git clone https://github.com/jgoradia3/scopedact.git
-cd scopedact
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install .
-scopedact-pilot init
-docker compose -f compose.pilot.yaml up --build -d --wait
-scopedact-pilot evaluate --output pilot-results/ticket-evaluation.json
-scopedact-pilot evaluate-delegation --output pilot-results/delegation-evaluation.json
-python pilot/verify_isolation.py
-```
+- Enforcement covers requests routed through the gateway, not every action on the host.
+- Task permissions come from configured policy and authority limits. Prompt text does not grant access or prove intent.
+- HMAC development credentials are not enterprise workload identities. The local profile selector is an evaluation control.
+- Native and Docker deployments have different isolation boundaries. New integrations require their own adapters and validation.
+- Local evidence is inspectable, but not independently notarized or administrator-proof. Runtime data may contain plaintext results; use synthetic data.
 
-Expected results: **17/17 ticket checks**, **19/19 delegation checks**, and successful isolation probes for both agent roles. These are defined workflow checks, not claims about every attack or deployment.
+See [limitations](docs/LIMITATIONS.md), [validation records](docs/STABILIZATION_REVIEW.md), and [capabilities](docs/CAPABILITIES.md). Deterministic tests and maintainer-run model evaluations are reported separately; neither establishes independent adoption.
 
-Run `init` once; it creates separate local keys. Existing v0.13 users should follow the [upgrade instructions](docs/DELEGATION.md#upgrade-from-v013). The evaluators are trusted test harnesses holding multiple role keys; the isolated agent probes each receive only their own key.
+## Further technical evaluation
 
-For hands-on use, follow [ticket approval](docs/TICKET_PILOT.md) or [delegation and lineage](docs/DELEGATION.md). Stop services with `docker compose -f compose.pilot.yaml down`; volumes persist.
+The [ticket pilot](docs/TICKET_PILOT.md) and [delegation evaluation](docs/DELEGATION.md) are separate scripted control tests. They exercise approval, replay protection, reconciliation, child grants and parent intervention. They are not the live-model walkthrough above.
 
-## Help test the boundaries
-
-Security, IAM, and agent-platform engineers: try the pilot, challenge a control, and tell us what would make it useful in your environment. A reproducible finding about one behavior is valuable.
-
-Start with the **[Reviewer Guide](docs/REVIEW_GUIDE.md)**. Try an out-of-scope request, an approval substitution, or a child action after parent revocation. Include the commit, environment, commands, and expected versus observed behavior in your report. Use [Security reporting](SECURITY.md) for sensitive findings.
-
-The [first hosted CI run](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed all four Python jobs (3.10–3.13) and the Docker pilot job, including isolation and restart checks. The original v0.14.1 suite contained **120 tests**; the SQLite ownership check reported **857 opened, zero unclosed** connections. See [validation details](docs/VALIDATION_0.14.1.md) and the live badge above for the current branch status.
-
-## Project status and scope
-
-**Current package: v0.20.0 · Developer preview for controlled evaluation.** This is a working reference implementation, not a production-ready service. The live incident lab adds real authentication services, an isolated local agent, and verified recovery while retaining the workspace and ticket evaluations. See [live-lab validation](docs/LIVE_LAB_VALIDATION.md) and [reviewer-experience validation](docs/REVIEWER_VALIDATION.md).
-
-The ticket pilot uses scripted proposals and separately authenticated development roles using HMAC keys. Those keys prove possession of configured secrets, not enterprise workload identity. Live-model/MCP integration, OIDC, and real Jira, ServiceNow, or cloud adapters remain [roadmap items](docs/ROADMAP.md).
-
-Local databases retain plaintext content; exports omit proposal bodies and read results but retain metadata. Event chains are not immutable third-party evidence. Keep evaluation interfaces on loopback. Read the [current limitations](docs/LIMITATIONS.md) and [pilot security boundaries](docs/PILOT_SECURITY.md) before running it.
-
-## Explore the implementation
-
-[Architecture](docs/ARCHITECTURE.md) · [Capability matrix](docs/CAPABILITIES.md) · [Connector development](docs/CONNECTOR_DEVELOPMENT.md) · [Vision](VISION.md) · [Publication boundary](docs/PUBLICATION_BOUNDARY.md)
-
-The [Python SDK](docs/SDK_INTEGRATION.md) and [older workspace application](docs/APPLICATION_GUIDE.md) are separate evaluation paths. The legacy workspace console lacks user authentication and is not the interface shown in these screenshots.
-
-[Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [License](LICENSE)
+[Connector development](docs/CONNECTOR_DEVELOPMENT.md) · [Python SDK](docs/SDK_INTEGRATION.md) · [Research to implementation](docs/RESEARCH_TO_IMPLEMENTATION.md) · [Vision](VISION.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE)

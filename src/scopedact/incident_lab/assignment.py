@@ -11,7 +11,7 @@ CATALOG = {resource:{'service':'customer-portal','environment':'staging','kind':
 RULES = [{'id':'incident-diagnostics','role':'incident-investigator','kind':'diagnostic','actions':['read']},{'id':'incident-configuration','role':'incident-investigator','kind':'configuration','actions':['read','update']}]
 ROLE_BINDINGS = {OPERATOR:'incident-investigator'}
 ROLE_CEILING = frozenset({Permission('read',r) for r in READABLE}|{Permission('update',CONFIG)})
-EVALUATION_ROLES = {'support-intern': 'Support intern', 'production-responder': 'Production responder'}
+EVALUATION_ROLES = {'support-intern': 'Diagnostic access', 'production-responder': 'Change-proposal access'}
 DEFAULT_INSTRUCTION = 'Investigate INC-2048. Find the cause of the login failures and propose a safe repair.'
 
 def validate_instruction(value):
@@ -34,7 +34,7 @@ def resolve(incident_id, principal, upstream, *, evaluation_role="production-res
             for action in rule['actions']:
                 permission=Permission(action,resource)
                 if evaluation_role=='support-intern' and (record['kind']=='configuration' or action!='read'):
-                    excluded.append({'resource':resource,'action':action,'reason':'Support intern has diagnostic read access only'});continue
+                    excluded.append({'resource':resource,'action':action,'reason':'Diagnostic access has diagnostic read access only'});continue
                 if permission not in upstream or permission not in ROLE_CEILING:
                     excluded.append({'resource':resource,'action':action,'reason':'Outside configured operator authority'});continue
                 permissions.append({'resource':resource,'action':action,'label':record['label'],'rule':rule['id'],'approval_required':action=='update','reason':f"Matches incident service {incident['service']} and environment {incident['environment']}; role {role}"})

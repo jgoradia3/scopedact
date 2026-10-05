@@ -51,3 +51,17 @@ assert.equal(nodes['compare-role'].hidden,false);assert.equal(nodes['investigati
 outcomeContext.report.actions.push({action:'read',resource:'doc:config',executed:false,decision:'PERMISSION_NOT_GRANTED'});outcomeContext.renderInvestigationOutcome();assert.match(JSON.stringify(nodes['investigation-outcome-body']),/does not have permission to access doc:config/);
 outcomeContext.selected='task:old';outcomeContext.renderInvestigationOutcome();assert.equal(nodes['investigation-outcome'].hidden,true);
 console.log('Read-only outcome and current-run attribution checks passed.');
+
+// A paused task must not offer a comparison that abandons its unresolved state.
+outcomeContext.selected='task:one';outcomeContext.guideState.status='paused_on_denial';
+outcomeContext.report.assignment={evaluation_role:'support-intern',role:'Diagnostic access'};
+outcomeContext.renderInvestigationOutcome();
+assert.equal(nodes['compare-role'].hidden,true);
+assert.match(JSON.stringify(nodes['investigation-outcome-body']),/Continuing keeps the same permissions/);
+assert.doesNotMatch(JSON.stringify(nodes['investigation-outcome-body']),/Access needed to continue/);
+outcomeContext.guideState.status='rejected_model_tool';outcomeContext.report.actions=[];
+outcomeContext.renderInvestigationOutcome();
+assert.match(JSON.stringify(nodes['investigation-outcome-body']),/That call was not dispatched/);
+assert.doesNotMatch(JSON.stringify(nodes['investigation-outcome-body']),/without submitting a repair/);
+assert.equal(nodes['compare-role'].hidden,false);
+console.log('Paused access comparison and invalid-tool explanations passed.');

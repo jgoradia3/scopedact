@@ -1,53 +1,43 @@
-# Security reviewer guide
+# Technical review guide
 
-For the latest live-service workflow, start with the [incident lab](LIVE_INCIDENT_LAB.md).
-Keep model success, enforcement correctness and independent review findings separate.
+Evaluate whether ScopedAct's recorded authorization decisions match actual protected execution. The staging incident is a test environment for these controls, not a claim of production readiness.
 
-Start with the [staging authentication incident evaluation](INCIDENT_EVALUATION.md).
-It provides a concrete investigation, a permission matrix, deliberate negative tests,
-expected outcomes, and a results worksheet. The primary questions are whether the agent
-stays within its assigned resources, whether approval and later intervention compose
-correctly, and whether the map supports reconstruction of what happened.
+## Start with one investigation
 
-The scripted harness is repeatable test equipment, not evidence of autonomous reasoning
-or external adoption. A separate optional local-model path is documented in that guide.
-Use synthetic resources first and report actual observations in your own words.
+Follow the [reviewer walkthrough](REVIEWER_QUICKSTART.md), using either [native setup](NATIVE_REVIEW.md) or the [Docker lab](LIVE_INCIDENT_LAB.md). Native mode supports functional review; Docker adds the documented container/network boundaries.
 
-## Earlier support-ticket evaluation
+Choose one question:
 
-Evaluate the documented synthetic pilot, not a production system. No cloud credentials or paid model are needed.
+- When a request is outside the task grant, is it denied before protected execution?
+- After a denial, does continuation retain exactly the same permissions?
+- Does approval bind the exact proposal, and do later authority checks still apply?
+- Does the map agree with the request history and execution evidence?
+- Can you distinguish a finished investigation, an applied change, and verified recovery?
 
-## Reproduce
+The local model may not attempt the action you expect. Report that outcome honestly. Use the separate deterministic evaluations when testing a particular control must not depend on a model's choice.
 
-```sh
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install .
-python -m unittest discover -s tests -v
-python -W error::ResourceWarning tools/check_sqlite_resources.py
-scopedact-pilot init
-docker compose -f compose.pilot.yaml up --build -d --wait
-scopedact-pilot evaluate --output pilot-results/ticket.json
-scopedact-pilot evaluate-delegation --output pilot-results/delegation.json
-python pilot/verify_isolation.py
-scopedact-pilot export --output pilot-results/evidence.json
+## Deeper control checks
+
+The [ticket pilot](TICKET_PILOT.md) and [delegation guide](DELEGATION.md) provide commands for scripted HTTP evaluations of approval, replay protection, reconciliation and constrained delegation. Their expected checks are defined in those guides. They do not constitute live-model or independent-use results.
+
+For an implementation review, start with [architecture](ARCHITECTURE.md), [security boundaries](PILOT_SECURITY.md), [limitations](LIMITATIONS.md) and [validation](STABILIZATION_REVIEW.md). Check ancestor revocation, approval substitution, duplicate requests, and uncertain remote outcomes. Integrations beyond the supplied adapters require separate assessment.
+
+## Submit a useful finding
+
+A GitHub issue can include:
+
+```text
+Commit/version:
+OS, Python, native or Docker:
+Ollama/model (if used):
+Access profile and exercise:
+Steps to reproduce:
+Expected authorization / execution:
+Observed authorization / execution:
+Evidence or request IDs (sanitized):
+Why this matters in your workflow:
 ```
 
-Skip init if configured already; use `init-child` when upgrading from v0.13. Use a new review directory if unsure.
+Describe what you actually ran, including unsuccessful or incomplete results. If you only inspected code or watched the video, say so. No positive endorsement is requested.
 
-## Review one claim at a time
-
-1. Use the [manual ticket workflow](TICKET_PILOT.md) to approve an exact update. Try substituting its task, resource, or content.
-2. Use the [delegation walkthrough](DELEGATION.md) to grant a child read-only access. Try privilege/resource/lifetime expansion and parent-grant reuse.
-3. Pause or revoke the parent, then try the next child action. Do not interpret this as cancellation of an already-dispatched operation.
-4. Inspect `scopedact-pilot lineage --task-id PARENT_ID`. Confirm initiator, parent, child, action, tool, decision, and outcome match the actual calls.
-5. Test uncertain-execution reconciliation or read its regression tests. Check that unknown effects are not retried automatically.
-6. Confirm the declared role-key and network boundaries. A trusted evaluation harness holds multiple keys; the included isolated probes do not.
-
-## Return actionable feedback
-
-Record release checksum, OS/Python/Docker versions, commands, expected and observed behavior, and a minimal synthetic reproducer. State exactly what you reviewed, whether you ran it, and any relationship to the author. A review is not an endorsement or a production deployment.
-
-Use the security-reporting policy for sensitive issues; do not attach credentials, database contents, or company data to public issues. The exported examples contain only synthetic data and redact proposal bodies/read results, but real metadata could still be sensitive.
-
-After evaluation, `docker compose -f compose.pilot.yaml down` stops services and keeps volumes. See the capability matrix and release-validation record for what was and was not tested.
+Inspect exports before attaching them. Do not share keys, access links, private journals or databases. For sensitive vulnerabilities, follow [SECURITY.md](../SECURITY.md) rather than a public issue.

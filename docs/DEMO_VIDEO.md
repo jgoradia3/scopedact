@@ -3,6 +3,8 @@
 [Watch or download the video](media/scopedact-walkthrough.mp4) ·
 [Transcript](media/scopedact-walkthrough.txt) · [Captions](media/scopedact-walkthrough.srt)
 
+The recording predates the capability-based labels: Support intern now appears as **Diagnostic access**, and Production responder as **Change-proposal access**. The permission boundaries are unchanged.
+
 This short video explains the native setup, simulated evaluation roles,
 a recorded denial and pause, the activity map, and a model run that did not repair
 the incident. It uses actual saved console screenshots and locally generated neural male English narration (Kokoro, am_michael), with normalized

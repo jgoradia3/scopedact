@@ -4,11 +4,11 @@ ScopedAct is a reference implementation for independently enforcing and attribut
 
 ## Next: independent review
 
-Collect reproducible findings, fix control defects, and verify documentation against observed behavior. Do not add integrations solely to increase feature count. Public CI should run when the repository is published; this local release does not claim hosted CI success.
+Collect reproducible findings, fix control defects, and verify documentation against observed behavior. Do not add integrations solely to increase feature count. Hosted CI covers the Python matrix and Docker evaluations; see Actions for the exact commit being assessed. Local-model reliability is reported separately from deterministic checks.
 
 ## Optional integration milestones
 
-- MCP tool interception and one real agent-framework example, preserving a deterministic no-model test path.
+- MCP tool interception and an external agent-framework adapter, building on the existing Ollama incident runner while preserving a deterministic no-model test path.
 - Standards-based workload/operator identity validation, issuer/subject/audience checks, short-lived credentials, and key rotation.
 - Operator-approved structured task constraints and policy-version binding. Do not claim semantic inference of arbitrary human intent.
 - A real ticketing or cloud adapter when an evaluator has a concrete use case and a safe test environment.

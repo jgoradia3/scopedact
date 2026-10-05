@@ -37,7 +37,7 @@ The launcher checks Ollama, starts six local services, and opens the console at
 `http://127.0.0.1:8891` with a private single-use sign-in link. Keep the terminal open.
 The link is valid for ten minutes; the signed-in session lasts one hour.
 
-1. Choose an evaluation role and read the incident brief.
+1. Choose Diagnostic access or Change-proposal access and read the incident brief.
 2. Start an investigation. No investigation runs before you click.
 3. Watch the current activity and resource map. The model chooses tool requests;
    ScopedAct checks each request before protected execution.
@@ -47,7 +47,7 @@ The link is valid for ten minutes; the signed-in session lasts one hour.
    Apply the approved proposal and verify recovery using the console controls.
 6. End the evaluation to revoke its remaining access.
 
-The incident and roles are synthetic. The HTTP services, model calls, permission
+The incident and access profiles are synthetic. The HTTP services, model calls, permission
 checks, approval decisions and evidence are real. **A repair is not guaranteed.**
 The model may stop, misunderstand evidence, or return an invalid tool call. An
 unfinished investigation is not a successful recovery. There is no scripted fallback.

@@ -32,9 +32,9 @@ Only source, tests, documentation, static assets and synthetic examples belong i
 - Console regression checks, wheel and source builds passed. Package archives excluded runtime data and secrets.
 - Fresh intern run: two allowed reads, configuration denied, runner paused with one queued call discarded. Operator continuation kept the task unchanged; the model finished without additional requests.
 - Fresh responder run: four reads succeeded, but the model misinterpreted configuration evidence and did not propose a repair. No successful repair or recovery is claimed for this run.
-- Initial hosted Docker jobs failed. A Linux private bind-mount ownership problem was reproduced in a Linux container; matching the host UID reads private files without extra capabilities. Compose/launcher/CI fixes are pending hosted revalidation.
+- Initial hosted Docker jobs failed. A Linux private bind-mount ownership problem was reproduced in a Linux container; matching the host UID reads private files without extra capabilities. Compose/launcher/CI fixes subsequently passed [hosted validation on b11c41d](https://github.com/jgoradia3/scopedact/actions/runs/37388749955).
 
-Keep this branch in draft review. Do not tag a release until hosted CI passes and the model reliability limitation is addressed or clearly bounded in the reviewer exercise. Evidence: [local evaluation](evaluations/stabilization-2026-10-05.json).
+Model reliability remains explicitly bounded in the reviewer exercise: a repair is not guaranteed. These results support controlled technical review, not operational adoption. Evidence: [local evaluation](evaluations/stabilization-2026-10-05.json).
 
 ## Native reviewer package — October 5, 2026
 
@@ -57,3 +57,20 @@ from the recorded live-model evaluation. The full suite passes 185 tests.
 A [narrated video](DEMO_VIDEO.md) uses saved Docker-lab screenshots, with clear
 edited-recording and synthetic-voice disclosure. Source and media contain no local
 keys, databases, or private agent journals.
+
+## Reviewer presentation and workflow check — October 5, 2026
+
+The current entry point uses one native setup path, capability-based access-profile
+labels, and explicit next steps for denied or incomplete investigations. Profile
+IDs and permission ceilings are preserved; historical evidence is not rewritten.
+The video remains a labeled recording of earlier runs rather than a claim of a new run.
+
+- 185 automated tests passed; 2,862 SQLite connections opened, zero unclosed.
+- Console regressions passed, including repeated approval clicks, reconnects,
+  no-selection rendering, paused-task comparison and invalid-tool explanations.
+- Wheel and source distribution built successfully.
+- Fresh native console sign-in and access-profile selection were checked in the browser.
+- No new successful model repair is claimed by this presentation update.
+
+Hosted checks apply to their exact commit. See the pull request and Actions for the
+published commit's status; the earlier successful hosted run is linked above.

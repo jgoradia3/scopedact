@@ -333,19 +333,25 @@ function renderInvestigationOutcome(){
  const finished=current&&['model_finished','denied','paused_on_denial','rejected_model_tool'].includes(guideState.status);
  $('investigation-outcome').hidden=!finished;$('compare-role').hidden=true;
  const body=$('investigation-outcome-body');body.replaceChildren();if(!finished||!report)return;
- const denied=report.actions.filter(a=>a.decision==='PERMISSION_NOT_GRANTED'&&a.executed===false);
- if(denied.length){body.append(el('h3','Access needed to continue'));
+ const denied=(report.actions||[]).filter(a=>a.decision==='PERMISSION_NOT_GRANTED'&&a.executed===false);
+ if(denied.length){body.append(el('h3','Request blocked'));
  for(const resource of new Set(denied.map(a=>a.resource)))body.append(el('p','This investigation does not have permission to access '+resourceLabel(resource)+'.'));
- body.append(el('p','ScopedAct blocked these requests before execution. Review the blocked activity below.'));
+ body.append(el('p','ScopedAct blocked these requests before execution. A blocked request does not establish that this resource is needed to resolve the incident.'));
+ }else if(guideState.status==='rejected_model_tool'){
+ body.append(el('h3','Tool request could not be executed'),el('p','The model returned an unsupported tool or invalid arguments. That call was not dispatched. Inspect the recorded activity before starting another evaluation.'));
  }else{body.append(el('h3','Investigation finished'),el('p','No blocked requests were recorded. The agent finished without submitting a repair.'));
  }
- const intern=report.assignment?.role==='Support intern';
- if(intern){body.append(el('p','Want to investigate with the responder’s access? Compare in a separate evaluation. This does not change permissions for this run.'));$('compare-role').hidden=false;}
- else body.append(el('p','Review the activity below before deciding whether to start another evaluation.'));
+ if(guideState.status==='paused_on_denial'){
+ body.append(el('p','Choose Continue with permitted evidence to let the agent try another approach, or End this evaluation to revoke its access. Continuing keeps the same permissions.'));return;
+ }
+ // Keep old saved assignments readable without changing their recorded evidence.
+ const diagnostic=report.assignment?.evaluation_role==='support-intern'||report.assignment?.role==='Support intern'||report.assignment?.role==='Diagnostic access';
+ if(diagnostic){body.append(el('p','You can compare a separate run using Change-proposal access. This does not elevate the current task.'));$('compare-role').hidden=false;}
+ else body.append(el('p','Review the activity below, then end this evaluation or start a separate investigation. No recovery is confirmed.'));
 }
 $('compare-role').onclick=guarded(async()=>{
  if(actionBusy)return;
- setActionBusy(true,'Preparing role comparison…');
+ setActionBusy(true,'Preparing access-profile comparison…');
  try{const brief=await api('/v1/lab/brief',{evaluation_role:'production-responder'});incidentBrief=brief;
  $('evaluation-role').value='production-responder';$('evaluation-role-label').textContent=brief.role;renderScope($('policy-preview-body'),brief);
  for(const button of document.querySelectorAll('[data-role]')){const active=button.dataset.role==='production-responder';button.classList.toggle('selected',active);button.setAttribute('aria-pressed',String(active));}
