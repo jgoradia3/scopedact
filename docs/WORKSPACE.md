@@ -172,3 +172,7 @@ and whether you used scripted clients or your own agent. A useful review answers
 you could identify the blocked resource, explain the helper's authority, and reconstruct
 an approved change without reading every raw event. Report actual experience in your own
 words. Testing is not production adoption. See [review guide](REVIEW_GUIDE.md).
+
+## Linux bind-mount ownership
+
+Before manual Docker Compose commands on Linux, set `export SCOPEDACT_UID=$(id -u) SCOPEDACT_GID=$(id -g)` in the shell that initialized the state directory. Containers then run as the owner of the private state and key files while retaining `cap_drop: ALL`. Do not make secrets world-readable. The reviewer launcher sets these values automatically on Linux. Docker Desktop retains its existing default.

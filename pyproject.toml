@@ -28,6 +28,7 @@ Issues = "https://github.com/jgoradia3/scopedact/issues"
 Source = "https://github.com/jgoradia3/scopedact"
 
 [project.scripts]
+scopedact-review = "scopedact.incident_lab.native:main"
 scopedact-lab = "scopedact.incident_lab.__main__:main"
 scopedact = "scopedact.cli:main"
 scopedact-pilot = "scopedact.pilot.__main__:main"

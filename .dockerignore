@@ -24,3 +24,5 @@ incident-evidence.json
 incident-agent-run.json
 
 .scopedact-lab/
+
+.scopedact-native/

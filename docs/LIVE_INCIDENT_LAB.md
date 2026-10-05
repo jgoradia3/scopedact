@@ -175,3 +175,7 @@ Record the date, platform, model, setup time, task ID and results:
 
 Model success and enforcement success are separate measurements. Report failed
 runs as well as successful ones. These local tests do not represent external use.
+
+## Linux bind-mount ownership
+
+Before manual Docker Compose commands on Linux, set `export SCOPEDACT_UID=$(id -u) SCOPEDACT_GID=$(id -g)` in the shell that initialized the state directory. Containers then run as the owner of the private state and key files while retaining `cap_drop: ALL`. Do not make secrets world-readable. The reviewer launcher sets these values automatically on Linux. Docker Desktop retains its existing default.

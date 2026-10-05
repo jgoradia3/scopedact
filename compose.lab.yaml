@@ -1,5 +1,6 @@
 x-service: &service
   build: .
+  user: "${SCOPEDACT_UID:-0}:${SCOPEDACT_GID:-0}"
   entrypoint: [scopedact-lab]
   read_only: true
   tmpfs: [/tmp]

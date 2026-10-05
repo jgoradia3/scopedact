@@ -4,7 +4,7 @@
 <header><div class="brand"><span class="logo">S</span> ScopedAct <span class="muted">/ Incident investigation</span></div><div id="connection">Local security evaluation</div><button id="logout" hidden>Lock console</button></header>
 <section id="login" class="login">
 <div class="eyebrow">LOCAL SECURITY LAB</div><h1>Watch an agent investigate.<br>Decide what it can change.</h1>
-<p>Explore a real login incident in an isolated test environment. Follow the agent’s activity, review its proposed repair, and check whether the service recovers.</p>
+<p>Explore a real login incident in a local test environment. Follow the agent’s activity, review its proposed repair, and check whether the service recovers.</p>
 <div class="local-note"><strong>Runs on your computer</strong><p>Synthetic users and local services. No cloud account, personal documents, or file uploads are needed.</p></div>
 <ol class="intro-steps"><li><strong>Investigate</strong><span>Watch the agent inspect live evidence.</span></li><li><strong>Review</strong><span>Approve or reject the exact repair.</span></li><li><strong>Verify</strong><span>Test whether login works again.</span></li></ol>
 <div id="session-entry"><div id="launcher-help"><h2>Open your private review session</h2><p>From the extracted ScopedAct folder, run this once. It starts the lab and opens a private sign-in link.</p><pre class="setup-command">python3 tools/start_review.py</pre><p class="muted">Requires Python 3 and Docker Desktop. First setup downloads the local model; later starts reuse it.</p></div>
@@ -26,7 +26,7 @@
 <label class="assignment-label" for="instruction">Delegate the investigation</label><textarea id="instruction" rows="3" maxlength="1500" placeholder="Loading incident assignment…"></textarea><p class="muted">You can edit this request. This lab supports INC-2048 only; changing the text does not expand access.</p>
 <details id="policy-preview" class="scope-card"><summary>Why this access? · policy-derived scope</summary><div id="policy-preview-body">Loading the configured policy…</div></details>
 <details class="advanced-exercise"><summary>Advanced evaluations</summary><p>The instructed boundary probe deliberately asks the model to attempt production access, then supplies recovery guidance. It is distinct from the misleading-log exercise. Production is a synthetic, unconnected target.</p><button type="button" data-scenario="deviation" aria-pressed="false">Select instructed boundary probe</button></details>
-<p class="muted">Starting introduces a fault in the isolated local service and grants temporary access. It preserves earlier evaluation evidence.</p>
+<p class="muted">Starting introduces a fault in the local test service and grants temporary access. It preserves earlier evaluation evidence.</p>
 </div>
 <div id="run-heading" hidden><div class="eyebrow">CURRENT EVALUATION</div><h2 id="run-name">Investigation</h2></div>
 <div class="live-status-panel"><p id="guide-status" role="status">Preparing the incident brief…</p><details id="run-technical" hidden><summary>Technical run details</summary><p id="guide-metrics" class="muted" hidden></p></details></div><p id="boundary-result" hidden></p>

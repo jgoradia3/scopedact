@@ -206,7 +206,7 @@ def resume(client, state_path):
 
 class OllamaModel:
     """Local-only Ollama transport, no proxy inheritance or redirects."""
-    def __init__(self, name, base='http://127.0.0.1:11434'):
+    def __init__(self, name, base='http://127.0.0.1:11434', *, cpu=False):
         from urllib.parse import urlsplit
         from urllib.request import build_opener, ProxyHandler
         from ..pilot.connector import NoRedirect
@@ -215,13 +215,14 @@ class OllamaModel:
                 or url.username or url.password or url.path not in {'', '/'} or url.query or url.fragment):
             raise ValueError('Ollama must be a loopback HTTP origin')
         self.name, self.base = name, base.rstrip('/')
+        self.cpu = cpu
         self.opener = build_opener(ProxyHandler({}), NoRedirect())
 
     def chat(self, messages, tools):
         from urllib.request import Request
         raw = json.dumps({'model': self.name, 'messages': messages, 'tools': tools,
                           'stream': False, 'think': False,
-                          'options': {'temperature': 0, 'num_predict': 1024, 'num_ctx': 4096, 'num_thread': 4}}).encode()
+                          'options': {'temperature': 0, 'num_predict': 1024, 'num_ctx': 4096, 'num_thread': 4, **({'num_gpu': 0} if self.cpu else {})}}).encode()
         with self.opener.open(Request(self.base + '/api/chat', data=raw,
                               headers={'Content-Type': 'application/json'}), timeout=600) as response:
             data = response.read(1048577)

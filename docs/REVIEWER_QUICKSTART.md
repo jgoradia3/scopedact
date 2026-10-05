@@ -1,5 +1,7 @@
 # Evaluate an incident investigation
 
+Prefer no Docker? Use the [native real-agent setup](NATIVE_REVIEW.md).
+
 From the extracted ScopedAct directory, with Python 3 and Docker Desktop installed:
 
 ```bash
@@ -85,3 +87,9 @@ A completed run shows a short outcome, not the model's full summary. Permission 
 ### Pause after access denial
 
 A denied permission request pauses the guided runner before any next queued call. Choose Continue with permitted evidence to resume the same task without expanding its permissions, or End this evaluation to revoke access. Remaining calls in the denied model batch are discarded; continuation asks the model for a fresh next action with the denial included in its context. This is a runner pause; it does not suspend independent clients. Uncertain execution outcomes require inspection instead of automatic continuation.
+
+### Sign-in link versus review session
+
+Reviewers run their own local lab; a maintainer's `127.0.0.1` link will not connect to it from another computer. The private link is single-use and must be redeemed within 10 minutes. After entry, the console session lasts one hour. Signing in does not start an agent.
+
+If the local lab is already running and the link expired, run `PYTHONPATH=src python3 -m scopedact.incident_lab review --open` from the source folder. This creates a fresh link without resetting evidence, changing task permissions, or launching an investigation. Task authority has its own expiration shown in the console. Do not share a private access link.

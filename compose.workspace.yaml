@@ -1,6 +1,7 @@
 services:
   gateway:
     build: .
+    user: "${SCOPEDACT_UID:-0}:${SCOPEDACT_GID:-0}"
     entrypoint: ["scopedact-workspace"]
     command: ["--directory", "/state", "serve", "--container"]
     ports:
@@ -19,6 +20,7 @@ services:
       retries: 20
   agent-probe:
     build: .
+    user: "${SCOPEDACT_UID:-0}:${SCOPEDACT_GID:-0}"
     profiles: ["verify"]
     entrypoint: ["python", "/app/tools/verify_workspace_boundary.py"]
     environment:
@@ -31,6 +33,7 @@ services:
     networks: [workspace]
   child-probe:
     build: .
+    user: "${SCOPEDACT_UID:-0}:${SCOPEDACT_GID:-0}"
     profiles: ["verify"]
     entrypoint: ["python", "/app/tools/verify_workspace_boundary.py"]
     environment:

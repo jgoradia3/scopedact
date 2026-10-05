@@ -14,6 +14,10 @@ parser.add_argument('--no-open',action='store_true',help='print the private sign
 args=parser.parse_args()
 os.chdir(root)
 env={**os.environ,'PYTHONPATH':str(root/'src')}
+# Linux bind mounts retain host ownership. Keep private modes and run as that owner.
+if sys.platform.startswith('linux'):
+    env.setdefault('SCOPEDACT_UID',str(os.getuid()))
+    env.setdefault('SCOPEDACT_GID',str(os.getgid()))
 docker=shutil.which('docker')
 if not docker:sys.exit('Docker is required. Install and start Docker Desktop, then run this command again.')
 def execute(command,**kwargs):return subprocess.run(command,check=True,env=env,**kwargs)

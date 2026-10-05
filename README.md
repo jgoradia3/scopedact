@@ -8,19 +8,28 @@ ScopedAct checks agent tool requests before they execute. Keep permissions limit
 
 **[Run the live incident lab](docs/LIVE_INCIDENT_LAB.md)** · **[See the ticket example](#see-it-in-action)** · **[Review the controls](docs/REVIEW_GUIDE.md)**
 
+**[Watch the narrated walkthrough](docs/DEMO_VIDEO.md)** · [Read the transcript](docs/media/scopedact-walkthrough.txt)
+
 ## Try it locally
 
-With Python 3 and Docker Desktop installed, run this from the extracted repository:
+**Without Docker:** install Python 3.10+ and [Ollama](https://ollama.com/download),
+open Ollama, then run these commands from the extracted repository (macOS/Linux):
 
 ```bash
-python3 tools/start_review.py
+ollama pull qwen3:1.7b
+python3 -m venv .venv
+.venv/bin/python -m pip install .
+.venv/bin/python tools/start_native_review.py
 ```
 
-The launcher starts the lab, prepares a local model, and opens a private, single-use
-sign-in link. **No file upload or cloud account.** First setup downloads model weights;
-later starts reuse them. In the console: **Choose an evaluation role → Start investigation → inspect recorded requests.**
-A permission denial pauses the runner. Continue with unchanged permissions or end the evaluation.
-If a repair is proposed, review it before applying and verifying recovery. [Reviewer instructions](docs/REVIEWER_QUICKSTART.md).
+The console opens on your computer at `http://127.0.0.1:8891` with a private sign-in
+link. Choose a role, start an investigation, and inspect the agent's actual requests.
+**This uses a real local model, with no scripted fallback.** The incident is synthetic;
+a correct repair is not guaranteed. Native mode does not provide container isolation.
+[Full instructions and troubleshooting](docs/NATIVE_REVIEW.md).
+
+**Prefer Docker?** Run `python3 tools/start_review.py` with Docker Desktop running.
+[Docker reviewer instructions](docs/REVIEWER_QUICKSTART.md).
 
 ## Investigate a real failure. Control the repair.
 
