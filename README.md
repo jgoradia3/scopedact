@@ -10,7 +10,7 @@ ScopedAct checks agent tool requests before they execute. Keep permissions limit
 
 ## Watch the demo video
 
-**[▶ Watch or download the narrated demo — MP4, 3 minutes](https://github.com/jgoradia3/scopedact/raw/b11c41d050d5d0566622af62117fd35c6f4111e3/docs/media/scopedact-walkthrough.mp4)**
+https://github.com/user-attachments/assets/67959949-1bfb-4571-bb01-3670fba5807d
 
 Male-voice walkthrough of the incident console, activity map, and blocked agent request. This edited video uses actual saved console views; it is not a continuous live recording.
 
