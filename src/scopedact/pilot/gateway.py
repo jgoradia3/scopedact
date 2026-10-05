@@ -31,7 +31,8 @@ def fields(value, required, optional=()):
         raise APIError(400, 'unexpected or missing fields')
 
 
-def build_gateway(host, port, *, database, agent_key, operator_key, connector, approval_ttl=300, child_key=None):
+def build_gateway(host, port, *, database, agent_key, operator_key, connector, approval_ttl=300, child_key=None,
+                  resource_validator=ticket_id, input_validator=validate_input, agent_routes=(), console_sessions=None):
     if agent_key == operator_key or len(agent_key) < 32 or len(operator_key) < 32:
         raise ValueError('distinct strong agent and operator keys required')
     if not 1 <= approval_ttl <= 3600:
@@ -60,8 +61,9 @@ def build_gateway(host, port, *, database, agent_key, operator_key, connector, a
         def do_POST(self):
             try:
                 raw, body = self.body()
-                actor = auth.verify('POST', self.path, raw, self.headers)
-                if self.path == '/v1/actions':
+                actor = (console_sessions.verify(self.headers) if console_sessions and self.headers.get('X-ScopedAct-Console') == '1'
+                         else auth.verify('POST', self.path, raw, self.headers))
+                if self.path == '/v1/actions' or self.path in agent_routes:
                     if actor not in {AGENT, CHILD}:
                         raise APIError(403, 'agent role required')
                 elif self.path == '/v1/delegations':
@@ -93,7 +95,7 @@ def build_gateway(host, port, *, database, agent_key, operator_key, connector, a
             path = self.path
             if path == '/v1/tasks':
                 fields(body, {'resource'})
-                ticket_id(body['resource'])
+                resource_validator(body['resource'])
                 permissions = {Permission(action, body['resource']) for action in ('read', 'update')}
                 store.add_authority(OPERATOR, permissions)
                 identifier = run_id('task-pilot')
@@ -111,7 +113,7 @@ def build_gateway(host, port, *, database, agent_key, operator_key, connector, a
                     if not isinstance(permission,dict):
                         raise APIError(400, 'invalid permission')
                     fields(permission, {'action','resource'})
-                    ticket_id(permission['resource'])
+                    resource_validator(permission['resource'])
                     if not isinstance(permission['action'],str):
                         raise APIError(400, 'invalid action')
                 try:
@@ -131,18 +133,18 @@ def build_gateway(host, port, *, database, agent_key, operator_key, connector, a
                 return lineage_report(store,registry,body['task_id'])
             if path == '/v1/actions':
                 fields(body, {'task_id', 'request_id', 'action', 'resource'}, {'input'})
-                ticket_id(body['resource'])
+                resource_validator(body['resource'])
                 request_id(body['request_id'])
                 value = body.get('input')
                 if body['action'] == 'update':
-                    validate_input(value)
+                    input_validator(value)
                 elif value is not None:
                     raise APIError(400, 'only update accepts input')
                 grant = registry.get(body['task_id'])
                 parent = registry.get(grant.parent_task_id) if grant and grant.parent_task_id else None
                 parent_actor = parent.principal if parent else grant.initiator if grant else None
                 request = ActionRequest(task_id=body['task_id'], request_id=body['request_id'],
-                    actor=actor, parent_actor=parent_actor, tool=TOOL,
+                    actor=actor, parent_actor=parent_actor, tool=connector.tool_name,
                     action=body['action'], resource=body['resource'])
                 approval = store.connection.execute(
                     'SELECT * FROM lifecycle_approvals WHERE request_id=?', (request.request_id,)).fetchone()

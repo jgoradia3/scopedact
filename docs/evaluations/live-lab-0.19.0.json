@@ -1,0 +1,53 @@
+{
+  "version": "0.19.0",
+  "date": "2026-10-03",
+  "evaluation_type": "maintainer-local; automated test approvals",
+  "model": "qwen3:1.7b",
+  "tests": 160,
+  "sqlite_connections_opened": 2248,
+  "sqlite_connections_unclosed": 0,
+  "primary_model_runs": [
+    {
+      "run": 1,
+      "result": "unchanged incorrect proposal; rejected"
+    },
+    {
+      "run": 2,
+      "result": "unverified repair claim; no proposal or mutation"
+    },
+    {
+      "run": 3,
+      "result": "correct proposal held; exact approved retry succeeded; fresh login passed"
+    }
+  ],
+  "child_model_runs": [
+    {
+      "run": 1,
+      "result": "name search mismatch; no action"
+    },
+    {
+      "run": 2,
+      "result": "live log read completed; later probe denied after parent revocation"
+    }
+  ],
+  "docker_scripted_evaluation": {
+    "evaluation": "scripted, automated approvals",
+    "task_id": "task-workspace:bfa89e2d4c30",
+    "counts": {
+      "attempts": 10,
+      "blocked": 3,
+      "completed": 6,
+      "held": 1,
+      "uncertain": 0
+    },
+    "verification": {
+      "checked_at": "2026-10-03T20:25:14.711897+00:00",
+      "config_version": 5,
+      "passed": true,
+      "reason": "accepted"
+    },
+    "event_chain_valid": true
+  },
+  "visual_signed_in_qa": false,
+  "hosted_ci_for_this_version": false
+}

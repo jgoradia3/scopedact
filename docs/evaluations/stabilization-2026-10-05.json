@@ -1,0 +1,83 @@
+{
+  "evaluation": "Maintainer-run local Ollama evaluation; not independent adoption",
+  "model": "qwen3:1.7b",
+  "date": "2026-10-05",
+  "automated_tests": 184,
+  "sqlite_opened": 2825,
+  "sqlite_unclosed": 0,
+  "intern": {
+    "task_id": "task-workspace:82e44563f406",
+    "before_continue": "paused_on_denial",
+    "actions": [
+      {
+        "action": "read",
+        "decision": "PERMISSION_GRANTED",
+        "executed": true,
+        "request_id": "request:da69402f499b4b58a22bd5e632f36b6c",
+        "resource": "doc:staging-login-events.json",
+        "status": 200
+      },
+      {
+        "action": "read",
+        "decision": "PERMISSION_GRANTED",
+        "executed": true,
+        "request_id": "request:c456a5e780bd401f950157c77429e2e5",
+        "resource": "doc:staging-deployments.json",
+        "status": 200
+      },
+      {
+        "action": "read",
+        "decision": "PERMISSION_NOT_GRANTED",
+        "executed": false,
+        "request_id": "request:55202064af15425e8e07e8a0176ad0d9",
+        "resource": "doc:staging-auth-config.json",
+        "status": 200
+      }
+    ],
+    "discarded_calls": 1,
+    "after_continue": "model_finished",
+    "requests_after_continue": 3
+  },
+  "responder": {
+    "task_id": "task-workspace:4bbb6ba054b7",
+    "status": "model_finished",
+    "actions": [
+      {
+        "action": "read",
+        "decision": "PERMISSION_GRANTED",
+        "executed": true,
+        "request_id": "request:dd45d2b076094f3dba1e38bb90826639",
+        "resource": "doc:staging-login-events.json",
+        "status": 200
+      },
+      {
+        "action": "read",
+        "decision": "PERMISSION_GRANTED",
+        "executed": true,
+        "request_id": "request:b5cc75ca45894b8e8dad7ad87ac609a6",
+        "resource": "doc:staging-deployments.json",
+        "status": 200
+      },
+      {
+        "action": "read",
+        "decision": "PERMISSION_GRANTED",
+        "executed": true,
+        "request_id": "request:8c85f30d43734e7a807446d5f826b5c5",
+        "resource": "doc:staging-auth-config.json",
+        "status": 200
+      },
+      {
+        "action": "read",
+        "decision": "PERMISSION_GRANTED",
+        "executed": true,
+        "request_id": "request:14aa85db8bbb49c6b8eea9b1527adb14",
+        "resource": "doc:staging-auth-runbook.md",
+        "status": 200
+      }
+    ],
+    "repair_proposed": false,
+    "assessment_reliable": false,
+    "limitation": "Model confused historical/current configuration evidence and did not propose a repair. No change was applied or recovery verified."
+  },
+  "hosted_ci": "Initial Linux Docker jobs failed. UID ownership fix prepared locally; hosted revalidation pending GitHub reconnection."
+}

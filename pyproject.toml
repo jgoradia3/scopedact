@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scopedact"
-version = "0.14.1"
+version = "0.20.0"
 description = "A local-first authority gateway and operator console for AI-agent tools."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -28,11 +28,18 @@ Issues = "https://github.com/jgoradia3/scopedact/issues"
 Source = "https://github.com/jgoradia3/scopedact"
 
 [project.scripts]
+scopedact-review = "scopedact.incident_lab.native:main"
+scopedact-lab = "scopedact.incident_lab.__main__:main"
 scopedact = "scopedact.cli:main"
 scopedact-pilot = "scopedact.pilot.__main__:main"
+scopedact-incident = "scopedact.workspace.incident:main"
+scopedact-agent = "scopedact.workspace.agent:main"
+scopedact-workspace = "scopedact.workspace.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
 scopedact = ["data/*.json"]
+
+"scopedact.workspace" = ["static/*.html", "static/*.js", "static/*.css", "fixtures/*.json"]
