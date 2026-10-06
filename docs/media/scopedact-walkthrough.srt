@@ -1,103 +1,119 @@
 1
-00:00:00,000 --> 00:00:06,073
-ScopedAct checks an AI agent’s requests before protected tools execute. This walkthrough uses actual
+00:00:00,000 --> 00:00:06,120
+One request to an AI agent can lead to many actions across connected systems.
 
 2
-00:00:06,073 --> 00:00:12,147
-console screenshots and recorded local evaluations. It is an edited explanation of saved runs,
+00:00:06,120 --> 00:00:12,240
+Broad permissions can let a mistake go further than intended. Malicious instructions hidden in
 
 3
-00:00:12,147 --> 00:00:18,220
-not a continuous live recording.
+00:00:12,240 --> 00:00:18,360
+retrieved content can redirect the agent. And when records are scattered, a reviewer must
 
 4
-00:00:19,720 --> 00:00:25,662
-To try it yourself, download the source and follow the native review guide. Install
+00:00:18,360 --> 00:00:24,480
+reconstruct what the agent requested, what was permitted, and what actually happened.
 
 5
-00:00:25,662 --> 00:00:31,605
-Python and Ollama, download the local model, and install ScopedAct. Run the native review
+00:00:25,980 --> 00:00:31,832
+Imagine you are investigating failed logins in a staging customer portal. A recent configuration
 
 6
-00:00:31,605 --> 00:00:37,548
-launcher. It opens a private localhost console link. Keep the terminal open while reviewing.
+00:00:31,832 --> 00:00:37,685
+change may be involved. You ask the agent to investigate. ScopedAct checks its requests
 
 7
-00:00:37,548 --> 00:00:43,490
-This native mode does not provide Docker network isolation.
+00:00:37,685 --> 00:00:43,538
+against the task’s permissions and records the results. If the agent proposes a repair,
 
 8
-00:00:44,990 --> 00:00:51,833
-The lab models a staging login incident. The reviewer selects a simulated role. The
+00:00:43,538 --> 00:00:49,390
+you review the exact change before it can be applied.
 
 9
-00:00:51,833 --> 00:00:58,677
-intern can read diagnostics. The responder can also inspect configuration and propose changes for
+00:00:50,890 --> 00:00:58,513
+The evaluation offers two access profiles. Diagnostic access permits diagnostic reads. Change-proposal access also
 
 10
-00:00:58,677 --> 00:01:05,520
-approval. These are local evaluation profiles, not enterprise identity integration.
+00:00:58,513 --> 00:01:06,137
+permits reading authentication configuration and proposing an update. Applying that update still requires approval.
 
 11
-00:01:07,020 --> 00:01:13,590
-In the recorded intern evaluation, the agent read login events and deployment history. Its
+00:01:06,137 --> 00:01:13,760
+These profiles let you compare permission boundaries for the same incident.
 
 12
-00:01:13,590 --> 00:01:20,160
-next request attempted to read authentication configuration. ScopedAct denied that request because the task
+00:01:15,260 --> 00:01:21,070
+In this recorded evaluation, the agent read login events and deployment history. It then
 
 13
-00:01:20,160 --> 00:01:26,730
-did not grant permission. The protected connector did not execute it.
+00:01:21,070 --> 00:01:26,880
+requested authentication configuration. That request was outside the task’s permissions. ScopedAct blocked it before
 
 14
-00:01:28,230 --> 00:01:33,822
-The runner paused at the denial, before the remaining queued call could execute. One
+00:01:26,880 --> 00:01:32,690
+the protected connector executed it. The denial came from the actual request, not from
 
 15
-00:01:33,822 --> 00:01:39,415
-queued call was discarded. The operator continued with unchanged permissions. The model then finished
+00:01:32,690 --> 00:01:38,500
+a warning added to the demonstration.
 
 16
-00:01:39,415 --> 00:01:45,008
-without making another request. Ending the evaluation revoked the task. This pauses this runner,
+00:01:40,000 --> 00:01:46,950
+After the denial, the guided agent paused. The operator could continue with permitted evidence
 
 17
-00:01:45,008 --> 00:01:50,600
-not every independent client.
+00:01:46,950 --> 00:01:53,900
+or end the evaluation. Continuing did not add permissions. In this recorded run, the
 
 18
-00:01:52,100 --> 00:01:58,573
-The activity map groups actual requests by agent and resource. Request numbers show the
+00:01:53,900 --> 00:02:00,850
+agent then finished without making another request. Ending the evaluation revoked its remaining access.
 
 19
-00:01:58,573 --> 00:02:05,047
-observed order. Expand a resource to inspect its decision and execution record. A blocked
+00:02:02,350 --> 00:02:07,997
+The activity map connects the task, agent, and requested resources. It shows recorded attempts
 
 20
-00:02:05,047 --> 00:02:11,520
-resource is not a simulated warning, and the map does not invent agent reasoning.
+00:02:07,997 --> 00:02:13,645
+and their outcomes. Expand a resource to inspect the individual requests. This helps you
 
 21
-00:02:13,020 --> 00:02:20,163
-A separate responder evaluation read four permitted resources, but the model misinterpreted configuration evidence
+00:02:13,645 --> 00:02:19,292
+review the activity for one assignment without piecing together unrelated records. The map covers
 
 22
-00:02:20,163 --> 00:02:27,307
-and proposed no repair. Authorization controls do not guarantee a correct diagnosis. This limitation
+00:02:19,292 --> 00:02:24,940
+requests through ScopedAct’s gateway.
 
 23
-00:02:27,307 --> 00:02:34,450
-remains visible rather than being replaced with a staged successful outcome.
+00:02:26,440 --> 00:02:31,915
+In another recorded run, the agent read four permitted resources and then stopped without
 
 24
-00:02:35,950 --> 00:02:43,090
-Review ScopedAct as a developer preview. Challenge the permission boundary, revocation, delegation constraints, and
+00:02:31,915 --> 00:02:37,390
+proposing a repair. The incident was not confirmed fixed. This is an important distinction:
 
 25
-00:02:43,090 --> 00:02:50,230
-execution evidence. The source and draft review are available on GitHub at jgoradia3 slash
+00:02:37,390 --> 00:02:42,865
+permission to act does not mean the agent has found the right answer. The
 
 26
-00:02:50,230 --> 00:02:57,370
-scopedact. This local lab uses synthetic data and does not connect to production.
+00:02:42,865 --> 00:02:48,340
+console keeps completed actions separate from confirmed recovery.
+
+27
+00:02:49,840 --> 00:02:55,302
+Use the evaluation to inspect a blocked request, review any proposed change, and check
+
+28
+00:02:55,302 --> 00:03:00,765
+the recorded outcome. The question is whether the agent’s actions stay within its authority,
+
+29
+00:03:00,765 --> 00:03:06,228
+and whether you can understand and stop its activity. ScopedAct demonstrates these controls in
+
+30
+00:03:06,228 --> 00:03:11,690
+a local test environment with synthetic data.

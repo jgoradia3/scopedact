@@ -3,17 +3,23 @@
 [Watch or download the video](media/scopedact-walkthrough.mp4) ·
 [Transcript](media/scopedact-walkthrough.txt) · [Captions](media/scopedact-walkthrough.srt)
 
-The recording predates the capability-based labels: Support intern now appears as **Diagnostic access**, and Production responder as **Change-proposal access**. The permission boundaries are unchanged.
+The revised eight-slide walkthrough starts with excessive authority, malicious
+instructions in retrieved content, and the difficulty of connecting task activity
+across separate records. Research references and their limits are in
+[Problem and evidence](PROBLEM_AND_EVIDENCE.md).
 
-This short video explains the native setup, simulated evaluation roles,
-a recorded denial and pause, the activity map, and a model run that did not repair
-the incident. It uses actual saved console screenshots and locally generated neural male English narration (Kokoro, am_michael), with normalized
-volume. It is an edited walkthrough, **not a continuous live screen recording**.
-Caption timings are approximate. Evaluations were run by the maintainer; they are
-not evidence of independent adoption. No production system or real customer data
-is shown. The saved runs predate the native launcher and used the Docker lab;
-both launchers use the same agent and enforcement code.
+The video follows a staging login investigation: access profiles, an actual denied
+authentication-configuration request, operator intervention, the activity map,
+and a separate run that ended without a repair. Setup commands stay in the
+[native setup guide](NATIVE_REVIEW.md), rather than the narration.
 
-The revised audio replaces the original eSpeak narration. Speech model: [Kokoro](https://github.com/thewh1teagle/kokoro-onnx).
+This is an edited walkthrough using saved console screenshots, **not a continuous
+live recording**. The saved Docker runs retain their historical labels; current
+narration calls the corresponding profiles Diagnostic access and Change-proposal
+access. No historical outcomes were changed. Native and Docker launchers share the
+agent and enforcement code but have different isolation boundaries.
 
-To run your own evaluation, follow the [native setup guide](NATIVE_REVIEW.md).
+Narration is locally generated male English speech (Kokoro, am_michael), with
+normalized volume. Caption timings are approximate. Maintainer-run evaluations
+are not independent adoption. All incident data is synthetic; no production
+system or real customer data is shown. [Speech tooling](https://github.com/thewh1teagle/kokoro-onnx).

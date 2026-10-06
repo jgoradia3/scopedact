@@ -4,13 +4,25 @@
 
 ScopedAct checks an agent’s tool requests before execution, limits access to the current task, and records what was allowed, blocked, approved, and changed. Security engineers can inspect the activity map and revoke remaining access.
 
+## The problem: a task is not a permission boundary
+
+An instruction such as “investigate these login failures” can lead an agent through many tool calls. If its credentials permit more than the assignment requires, a mistaken or manipulated request can affect unrelated resources. OWASP identifies excessive functionality, permissions and autonomy as causes of [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/).
+
+Retrieved content introduces another risk. An agent can encounter instructions hidden in a document or tool response that redirect it away from the user's task. This is documented by [NIST's agent-hijacking evaluation](https://www.nist.gov/news-events/news/2025/01/technical-blog-strengthening-ai-agent-hijacking-evaluations) and [AgentDojo, published at NeurIPS 2024](https://proceedings.nips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html).
+
+For a security reviewer, isolated API records leave a reconstruction problem: **Which assignment caused this request? Which agent made it? What authority applied? Was it only proposed, blocked, or actually executed?** OWASP's [logging guidance](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) recommends linking related events with an interaction identifier. ScopedAct applies that principle to task, agent, authorization and execution records.
+
+ScopedAct's approach is to enforce explicit task permissions before protected execution, retain attribution when work is delegated, require exact approval for protected changes, and present the recorded activity together. A final agent summary is not evidence that every action was authorized or that the task succeeded. The activity map supports inspection; it does not infer the agent's reasoning or automatically recognize every deviation from human intent.
+
+These sources motivate the problem; they do not evaluate or endorse ScopedAct. [Research context and implementation boundaries](docs/PROBLEM_AND_EVIDENCE.md).
+
 **[Start a local evaluation](docs/NATIVE_REVIEW.md)** · **[Reviewer walkthrough](docs/REVIEWER_QUICKSTART.md)** · **[Architecture](docs/ARCHITECTURE.md)**
 
 ## Watch the demo video
 
-https://github.com/user-attachments/assets/67959949-1bfb-4571-bb01-3670fba5807d
+https://github.com/user-attachments/assets/f4275817-a6dc-488d-b029-87dea136cb96
 
-[Video, transcript and recording details](docs/DEMO_VIDEO.md). This is an edited walkthrough of maintainer-run evaluations, with synthetic narration. The recording uses earlier profile labels; the current console calls them **Diagnostic access** and **Change-proposal access**.
+[Video, transcript and recording details](docs/DEMO_VIDEO.md). This is an edited walkthrough of maintainer-run evaluations, with synthetic narration. Saved console views retain their original run labels; narration uses the current access-profile names.
 
 ## Download, install, start
 
