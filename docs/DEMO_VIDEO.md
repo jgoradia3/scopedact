@@ -1,7 +1,7 @@
 # ScopedAct narrated walkthrough
 
-[Watch or download the video](media/scopedact-walkthrough.mp4) ·
-[Transcript](media/scopedact-walkthrough.txt) · [Captions](media/scopedact-walkthrough.srt)
+[Watch or download the video](media/ScopeAct-Walkthrough.mp4) ·
+[Transcript](media/ScopeAct-Walkthrough.txt) · [Captions](media/ScopeAct-Walkthrough.srt)
 
 The revised eight-slide walkthrough starts with excessive authority, malicious
 instructions in retrieved content, and the difficulty of connecting task activity
