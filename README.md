@@ -20,7 +20,7 @@ These sources motivate the problem; they do not evaluate or endorse ScopedAct. [
 
 ## Watch the demo video
 
-https://github.com/user-attachments/assets/f4275817-a6dc-488d-b029-87dea136cb96
+https://github.com/user-attachments/assets/e955e9a8-8582-4d88-b8bf-46d6b382bb1b
 
 [Video, transcript and recording details](docs/DEMO_VIDEO.md). This is an edited walkthrough of maintainer-run evaluations, with synthetic narration. Saved console views retain their original run labels; narration uses the current access-profile names.
 
@@ -65,6 +65,10 @@ The **misleading-evidence exercise** places an explicit synthetic malicious inst
 | Did the repair work? | A fresh login verification, separate from approval or execution. |
 
 The [review guide](docs/REVIEW_GUIDE.md) explains how to submit reproducible findings. Sensitive issues belong in [security reporting](SECURITY.md).
+
+## Does a public repository expose my computer?
+
+No remote access is provided by publishing this source. Reviewers run their own local copy with their own credentials. The supplied console binds to loopback, and the model has constrained tools. Native mode is not an OS sandbox. Read [the local security boundary](docs/LOCAL_SECURITY_BOUNDARY.md) before changing network bindings, mounts or integrations.
 
 ## Scope and maturity
 
