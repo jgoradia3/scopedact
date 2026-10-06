@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Live lab validation — 0.19.0
 
 Executed locally on 2026-10-03 with Docker Desktop and Ollama qwen3:1.7b.

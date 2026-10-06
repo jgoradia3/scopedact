@@ -1,48 +1,55 @@
-> Legacy workspace/laboratory guide. Current ticket-pilot controls and trust boundaries are described in [pilot security](PILOT_SECURITY.md) and [the reviewer guide](REVIEW_GUIDE.md).
+# Threat model
 
-# Threat Model
+ScopedAct protects configured tool calls that pass through its gateway. The current
+reviewer workflow is a live-model investigation of a synthetic staging incident.
+It is a controlled evaluation, not a security boundary around every process on a laptop.
 
-## Security properties demonstrated
+## Assets and trust
 
-For the predefined synthetic lifecycle, a task grant is issued only when each
-requested permission exists in the initiator's local upstream-authority record.
-A service action executes only when the task is active, the request is not a
-terminal replay, the tool binding matches, the acting principal owns the grant,
-the exact action-resource permission is present, and any configured approval is
-satisfied.
+Protected assets are task grants, approval records, service configuration, backend
+credentials and execution evidence. The model's instructions and retrieved content
+are untrusted proposals; they cannot issue grants or approve their own changes.
 
-## In scope
+The host administrator, gateway, policy configuration, trusted launcher, operator
+and supplied service implementations are trusted. The reviewer worker orchestrates
+model calls using constrained tools. Its control credential is privileged; it must
+not be exposed as a model tool. Enterprise identity federation is not implemented.
 
-- An agent proposes an action not listed in its grant.
-- Untrusted invoice text encourages a more privileged action.
-- A sub-agent is proposed with permissions absent from its single parent grant.
-- A caller uses a grant belonging to a different principal.
-- A grant is missing, expired, inactive, or revoked.
-- A reviewer needs to reconstruct the demonstrated execution chain from audit fields.
-- An operator pauses, resumes, revokes, or closes a task.
-- A sensitive action waits for durable approval.
-- A completed request identifier is replayed after restart.
+## Threats and controls
 
-## Trusted components
+| Threat | Boundary enforced | Important limit |
+|---|---|---|
+| Agent requests unrelated access | Exact task action/resource grant checked before dispatch | A permitted action can still be inappropriate; intent is not inferred from prose |
+| Retrieved content redirects the model | The redirected tool request faces the same independent checks | No universal prompt-injection detector; misleading allowed output remains possible |
+| Agent expands delegated authority | Child permissions and expiry constrained by parent; later calls recheck ancestry | One exposed delegation hop in the ticket pilot, no multi-parent analysis |
+| Approved input is substituted | Canonical request binding and exact proposal approval | Approval does not prove the proposed repair is correct |
+| Signed request is replayed or duplicated | Nonce checks, durable execution claims and backend receipts | A different request ID is a different operation; uncertain effects require reconciliation |
+| Access is revoked after approval | Authority is checked again before later dispatch | In-flight work is not canceled or undone; no distributed revocation |
+| Remote caller reaches the local console | Loopback publishing, short-lived sign-in, session/CSRF and origin/host checks | Do not expose the local deployment publicly; HTTP signing is not encryption |
+| Agent bypasses the gateway | Supplied Docker networks and separate service credentials | Native services share the same OS account; native mode is not a sandbox |
+| Reviewer misreads execution history | Task/request attribution, decisions, receipts and activity map | Only gateway-covered activity; not model reasoning or host-wide monitoring |
+| Privileged operator rewrites evidence | Local hash chaining supports consistency checks | Not immutable, externally notarized or administrator-proof evidence |
 
-- Python runtime and host running the demonstration
-- Authorization evaluator and gateway code
-- SQLite lifecycle and grant registries for the MVP
-- Protected local tool or optional connector
-- Test fixtures and fixed clock
+## Deployment distinctions
 
-## Out of scope
+- **Native incident review:** loopback services and authenticated requests, all under
+  the user's OS account. No protection against hostile same-user code.
+- **Docker incident lab:** separated service networks and keys; agent access does
+  not include backend credentials or a Docker socket. Host/Docker administrators
+  remain trusted. The model container has its own writable model storage.
+- **Scripted ticket pilot:** separate primary, child, operator and backend credentials,
+  with specific isolation and restart checks. See [pilot security](PILOT_SECURITY.md).
+- **Legacy file workspace and procurement examples:** different, weaker boundaries,
+  including an unauthenticated local operator console. They do not inherit the
+  current session-based console's protections.
 
-- Compromise or bypass of the gateway/evaluator
-- Tampering with in-memory state or audit files
-- Authentication of humans, reviewers, or workloads
-- Cryptographic integrity, replay protection across processes, or key management
-- Distributed races, stale evaluators, policy propagation, and automated rollback
-- Collusion, multi-parent delegation, or aggregate authority
-- Semantic correctness of user intent
-- Prompt-injection detection or model alignment
-- Production availability, privacy, and regulatory compliance
+## Outside the demonstrated guarantees
 
-## Important interpretation
+Compromised host or gateway, hostile dependency installation, arbitrary agent code,
+public multi-tenant hosting, production credential lifecycle, high availability,
+automatic rollback, semantic correctness and universal attack prevention are outside
+the demonstrated guarantees. Native or Docker setup alone does not establish them.
 
-The malicious-instruction scenario does not claim to detect prompt injection. It intentionally allows a scripted agent to propose the disallowed action and shows that an external permission check blocks execution.
+See [local exposure checks](LOCAL_SECURITY_BOUNDARY.md), [limitations](LIMITATIONS.md),
+[control regressions](CONTROL_TEST_MAP.md) and [dated validation](STABILIZATION_REVIEW.md).
+These describe tested scope, not a completed independent penetration test.

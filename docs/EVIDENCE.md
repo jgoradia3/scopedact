@@ -1,42 +1,33 @@
-# Evidence and Measurement Guidance
+# Reading and reporting evidence
 
-## Reproducible evidence
+A model response, an authorization decision, a tool execution and verified recovery
+are different events. Report them separately.
 
-Run:
+| Observation | What it establishes |
+|---|---|
+| Allowed request | The recorded request passed the applicable gateway checks |
+| Denied request | That request was refused; inspect dispatch evidence or backend receipts when testing non-execution |
+| Approved proposal | A reviewer approved exact content; later authority checks still apply |
+| Applied change | The protected service reports a completed mutation |
+| Recovery verified | A fresh verification succeeded for this synthetic incident |
+| Agent finished | The runner stopped; this alone establishes neither repair nor recovery |
 
-```bash
-python -m unittest discover -s tests -v
-scopedact lifecycle-demo
-```
+## Reproduce a finding
 
-Version 0.11.0 supports reporting:
+Record the commit, environment, setup path, model (if used), access profile, steps,
+request IDs, expected result and observed result. Export evidence from the console
+and inspect it before sharing. Never attach access links, keys, raw databases or
+private model journals. Exports may retain sensitive resource names and metadata.
+See the [review guide](REVIEW_GUIDE.md) for the reporting template.
 
-- 68 included unit, integration, HTTP-boundary, and explanation tests passed in the release validation run;
+Local event chains and separately persisted backend receipts support inspection.
+They are not immutable third-party evidence: an administrator controlling the host
+can modify state. See [limitations](LIMITATIONS.md).
 
-- predefined tests passed or failed;
-- predefined scenarios passed or failed;
-- unauthorized action attempts blocked in those fixtures;
-- benign authorized actions completed in those fixtures;
-- invalid child expansions rejected in those fixtures;
-- expired and revoked requests rejected;
-- presence of required audit fields; and
-- decision reason-code counts.
-- grant issuance rejected when a requested permission is absent from the local
-  upstream-authority record;
-- approval, pause, resume, and close behavior in the included lifecycle fixture;
-- durable request, attempt, approval, outcome, and event records across local
-  process restarts; and
-- dashboard HTML and JSON state rendering against the included local database.
+## Keep results tied to their source
 
-## Claims discipline
-
-Use a statement tied to a version, command, environment, and fixture set. Example:
-
-> All included automated tests passed for ScopedAct version 0.11.0 on the documented local run. Live-model and real-cloud paths require separate environment-specific validation.
-
-Do not describe the local authority source as identity-provider authentication
-or claim that mocked connector tests establish real-world deployment efficacy.
-
-Avoid unbounded claims such as “the project solves agent identity security,” “prevents privilege escalation,” or “is enterprise-ready.”
-
-Do not manufacture adoption, testimonials, issue activity, benchmark scale, or external validation. Preserve genuine criticism and independently submitted issues.
+Use [the control-to-test map](CONTROL_TEST_MAP.md) for deterministic regressions and
+[the validation record](STABILIZATION_REVIEW.md) for dated maintainer runs. Historical
+counts describe those runs only. A successful scripted test does not establish
+live-model reliability, independent adoption, or effectiveness against arbitrary attacks.
+Keep failed runs and criticism. Attribute independent feedback only with permission.

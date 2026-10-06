@@ -9,8 +9,8 @@ body:
   - type: input
     id: version
     attributes:
-      label: ScopedAct and Python versions
-      placeholder: scopedact 0.14.1; Python 3.11
+      label: Commit, Python version and setup path
+      placeholder: "Commit SHA; Python 3.11; macOS native; Ollama/model version"
     validations:
       required: true
   - type: textarea

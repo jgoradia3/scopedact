@@ -7,7 +7,7 @@ body:
     id: path
     attributes:
       label: Integration path
-      options: [Authenticated ticket pilot, Delegation workflow, Python SDK, Legacy HTTP service lab, Legacy AWS read-only example, Other]
+      options: [Native incident review, Docker incident review, Managed document workspace, Authenticated ticket pilot, Delegation workflow, Python SDK, Legacy HTTP service lab, Legacy AWS read-only example, Other]
     validations:
       required: true
   - type: textarea

@@ -1,3 +1,5 @@
+> Separate reference example. For the current live-service incident console, start with [native review](NATIVE_REVIEW.md). Do not mix the setup commands across these workflows.
+
 # A real local agent, with ScopedAct controlling its tools
 
 The model chooses document reads and proposes replacement text. Every supported tool

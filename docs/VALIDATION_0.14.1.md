@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Local release validation — v0.14.1
 
 Validated on 2026-09-22. This is local engineering validation, not independent review or hosted GitHub CI.

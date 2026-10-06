@@ -20,7 +20,7 @@ The local model may not attempt the action you expect. Report that outcome hones
 
 The [ticket pilot](TICKET_PILOT.md) and [delegation guide](DELEGATION.md) provide commands for scripted HTTP evaluations of approval, replay protection, reconciliation and constrained delegation. Their expected checks are defined in those guides. They do not constitute live-model or independent-use results.
 
-For an implementation review, start with [architecture](ARCHITECTURE.md), [security boundaries](PILOT_SECURITY.md), [limitations](LIMITATIONS.md) and [validation](STABILIZATION_REVIEW.md). Check ancestor revocation, approval substitution, duplicate requests, and uncertain remote outcomes. Integrations beyond the supplied adapters require separate assessment.
+For an implementation review, start with [architecture](ARCHITECTURE.md), [threat model](THREAT_MODEL.md), [local security boundaries](LOCAL_SECURITY_BOUNDARY.md), [limitations](LIMITATIONS.md) and [validation](STABILIZATION_REVIEW.md). Check ancestor revocation, approval substitution, duplicate requests, and uncertain remote outcomes. Integrations beyond the supplied adapters require separate assessment.
 
 ## Submit a useful finding
 

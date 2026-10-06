@@ -74,3 +74,25 @@ The video remains a labeled recording of earlier runs rather than a claim of a n
 
 Hosted checks apply to their exact commit. See the pull request and Actions for the
 published commit's status; the earlier successful hosted run is linked above.
+
+## Repository consistency review — October 5, 2026
+
+Reviewed the tracked-file inventory, entry points, documentation references,
+deployment descriptions and packaging. Removed superseded screenshot-report assets,
+an unused generated audit sample and redundant presentation pages. Consolidated
+four historical release notes without deleting their recorded detail. Retained
+runtime modules, existing tests and historical evaluation evidence.
+
+- 185 Python tests passed; 2,865 SQLite connections opened, zero unclosed.
+- Console regressions and the SDK allow/deny example passed.
+- Repository checker passed local Markdown links plus Python/JSON syntax checks;
+  missing-link and missing-heading negative probes also failed as expected.
+- Wheel and source distribution built. A fresh wheel installation reported 0.20.0
+  and exposed the native reviewer CLI. The source distribution includes Compose
+  files, developer checks and JavaScript regressions; packaged UI/fixtures were checked.
+- No runtime key/database paths were present in the staged source inventory or
+  inspected source distribution. This is not a complete secret-history scan.
+
+No agent, gateway or console runtime behavior changed. This review does not claim
+an exhaustive security audit, a new live-model repair, or independent evaluation.
+Hosted results apply to the exact cleanup commit and are available in its pull request.

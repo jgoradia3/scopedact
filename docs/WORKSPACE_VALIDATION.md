@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Managed workspace validation — 0.15.0
 
 Local validation on October 2, 2026. These are maintainer-run checks, not independent adoption evidence.
