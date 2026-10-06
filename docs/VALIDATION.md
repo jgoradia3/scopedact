@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Local validation — v0.12.0
 
 Validated September 21, 2026 on macOS, Python 3.11.

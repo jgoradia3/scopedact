@@ -16,7 +16,7 @@ ScopedAct's approach is to enforce explicit task permissions before protected ex
 
 These sources motivate the problem; they do not evaluate or endorse ScopedAct. [Research context and implementation boundaries](docs/PROBLEM_AND_EVIDENCE.md).
 
-**[Start a local evaluation](docs/NATIVE_REVIEW.md)** · **[Reviewer walkthrough](docs/REVIEWER_QUICKSTART.md)** · **[Architecture](docs/ARCHITECTURE.md)**
+**[Start a local evaluation](docs/NATIVE_REVIEW.md)** · **[Reviewer walkthrough](docs/REVIEWER_QUICKSTART.md)** · **[Documentation index](docs/START_HERE.md)**
 
 ## Watch the demo video
 
@@ -66,10 +66,6 @@ The **misleading-evidence exercise** places an explicit synthetic malicious inst
 
 The [review guide](docs/REVIEW_GUIDE.md) explains how to submit reproducible findings. Sensitive issues belong in [security reporting](SECURITY.md).
 
-## Does a public repository expose my computer?
-
-No remote access is provided by publishing this source. Reviewers run their own local copy with their own credentials. The supplied console binds to loopback, and the model has constrained tools. Native mode is not an OS sandbox. Read [the local security boundary](docs/LOCAL_SECURITY_BOUNDARY.md) before changing network bindings, mounts or integrations.
-
 ## Scope and maturity
 
 **Developer preview for controlled technical evaluation.** ScopedAct is an authorization and accountability reference implementation. It is not ready for operational adoption.
@@ -77,7 +73,7 @@ No remote access is provided by publishing this source. Reviewers run their own 
 - Enforcement covers requests routed through the gateway, not every action on the host.
 - Task permissions come from configured policy and authority limits. Prompt text does not grant access or prove intent.
 - HMAC development credentials are not enterprise workload identities. The local profile selector is an evaluation control.
-- Native and Docker deployments have different isolation boundaries. New integrations require their own adapters and validation.
+- Reviewers run their own local copy. Native and Docker deployments have different [security boundaries](docs/LOCAL_SECURITY_BOUNDARY.md); native mode is not an OS sandbox. New integrations require their own adapters and validation.
 - Local evidence is inspectable, but not independently notarized or administrator-proof. Runtime data may contain plaintext results; use synthetic data.
 
 See [limitations](docs/LIMITATIONS.md), [validation records](docs/STABILIZATION_REVIEW.md), and [capabilities](docs/CAPABILITIES.md). Deterministic tests and maintainer-run model evaluations are reported separately; neither establishes independent adoption.

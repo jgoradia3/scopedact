@@ -1,19 +1,10 @@
-include README.md VISION.md LICENSE CHANGELOG.md SECURITY.md CONTRIBUTING.md
+include README.md VISION.md LICENSE CHANGELOG.md SECURITY.md CONTRIBUTING.md CODE_OF_CONDUCT.md
+include Makefile Dockerfile compose.yaml compose.lab.yaml compose.pilot.yaml compose.workspace.yaml
 recursive-include config *.json
-recursive-include docs *.md
+recursive-include docs *.md *.json *.mp4 *.txt *.srt
 recursive-include examples *.py *.json
-include compose.pilot.yaml
 recursive-include pilot *.py Dockerfile
-recursive-include docs *.json
 recursive-include tools *.py
-recursive-include docs/images *.png
-include compose.workspace.yaml
+recursive-include tests *.py *.cjs
 recursive-include src/scopedact/workspace/static *.html *.css *.js
-
 recursive-include src/scopedact/workspace/fixtures *.json
-
-include compose.lab.yaml Dockerfile
-
-include tools/start_review.py
-
-recursive-include docs/media *.mp4 *.txt *.srt

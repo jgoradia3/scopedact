@@ -1,3 +1,5 @@
+> Separate reference example. For the current live-service incident console, start with [native review](NATIVE_REVIEW.md). Do not mix the setup commands across these workflows.
+
 # Protected workspace application
 
 The workspace application is ScopedAct's primary v0.11 experience. It provides a real local tool with controlled side effects, not a precomputed pass/fail simulation.

@@ -1,6 +1,6 @@
 # Python SDK integration
 
-ScopedAct v0.11.0 exposes a small dependency-free API for protecting ordinary Python functions. Use the protected-workspace application first, then use this API to adapt an existing local function.
+This optional process-local API protects ordinary Python functions. It is separate from the live reviewer console and has a narrower trust boundary. For the current walkthrough, use [native review](NATIVE_REVIEW.md).
 
 ## Install
 

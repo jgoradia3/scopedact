@@ -12,7 +12,6 @@ audit/*.db
 audit/*.db-*
 audit/*.json
 !audit/.gitkeep
-!audit/sample_audit.jsonl
 .scopedact-pilot/
 pilot-results/
 
@@ -28,3 +27,13 @@ incident-agent-run.json
 .scopedact-lab/
 
 .scopedact-native/
+
+# Guard custom local evaluation paths as well as the default directories.
+*.key
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example

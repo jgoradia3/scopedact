@@ -1,3 +1,5 @@
+> Separate reference example. For the current live-service incident console, start with [native review](NATIVE_REVIEW.md). Do not mix the setup commands across these workflows.
+
 # Security evaluation: investigate an authentication regression without expanding agent access
 
 ScopedAct should let an investigator answer: **What did this agent access for this

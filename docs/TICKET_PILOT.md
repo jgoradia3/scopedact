@@ -1,4 +1,4 @@
-# ScopedAct support-ticket pilot — v0.14.1
+# Scripted support-ticket evaluation
 
 A complete, provider-neutral **synthetic test workflow**: an agent reads its assigned ticket, proposes a comment, and an authenticated operator reviews and approves the exact change before the REST tool executes it. No cloud account, paid model, or production credentials are needed.
 

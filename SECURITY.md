@@ -1,15 +1,30 @@
 # Security policy
 
-ScopedAct v0.14.1 is experimental developer-preview software for synthetic-data evaluation. The authenticated ticket pilot uses separate HMAC development-role keys and a tested Docker network boundary. These controls do not establish enterprise identity or production readiness. See [current limitations](docs/LIMITATIONS.md) and [pilot trust boundaries](docs/PILOT_SECURITY.md).
+ScopedAct is developer-preview software for controlled, synthetic-data evaluation.
+The current incident lab uses authenticated local sessions, signed agent requests,
+explicit task permissions and approval-gated changes. These controls do not establish
+enterprise identity, production readiness or protection from every prompt injection.
 
-The legacy workspace console has no user authentication. The procurement lab includes a public evaluation key and runs local HTTP services without OS isolation. Keep all evaluation interfaces on loopback; do not expose them publicly or use production credentials or customer data.
+Reviewers run their own copy. Publishing this repository does not grant access to
+the maintainer's computer. Keep supplied interfaces on loopback and do not commit
+or share credentials, sign-in links, databases or private journals. Native mode
+shares your OS account and is not a sandbox. Docker provides the specific isolation
+boundaries documented in [local security](docs/LOCAL_SECURITY_BOUNDARY.md).
 
-For non-sensitive defects, open a minimal GitHub issue with the version, expected behavior, and synthetic reproducer. For sensitive findings, use GitHub's private vulnerability reporting only if it is enabled on the published repository. If no private channel is available, request a private contact route without posting exploit details or secrets. Private reporting and hosted security support have not been verified for this local release.
+The original file-workspace console (`scopedact serve`) has no user authentication.
+The older procurement lab includes a public example key. These separate reference
+examples do not inherit the current console's session protections.
 
-No production-service SLA or security-support commitment is provided.
+## Reporting
 
-## Managed workspace
+For non-sensitive defects, open a minimal GitHub issue with the commit/version,
+environment, expected behavior and a synthetic reproducer. Do not include real
+customer data or production credentials.
 
-See [workspace security boundaries](docs/WORKSPACE.md#evidence-semantics-and-limits).
-Keep the console on loopback. Agent containers must not mount workspace state, operator keys,
-or the Docker socket. Imported documents, proposals, and historical versions are plaintext.
+For sensitive findings, use GitHub private vulnerability reporting **if enabled** on
+the repository. If no private route is available, request one without posting exploit
+details or secrets. This policy does not claim that a private reporting route has
+been verified or promise a response SLA.
+
+See [threat model](docs/THREAT_MODEL.md), [limitations](docs/LIMITATIONS.md) and
+[ticket-pilot boundaries](docs/PILOT_SECURITY.md) for component-specific scope.

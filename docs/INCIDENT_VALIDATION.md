@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # STG-AUTH-204 validation — 0.18.0
 
 Maintainer-run validation on October 3, 2026. Synthetic fixtures and automated test

@@ -1,4 +1,24 @@
-# Current architecture — v0.14.1
+# Architecture
+
+The primary walkthrough investigates a synthetic staging login incident. A local
+model proposes tool calls; ScopedAct independently decides whether those calls
+may execute. The console shows recorded actions and intervention controls.
+
+```mermaid
+flowchart LR
+    O[Reviewer] --> C[Local console]
+    C --> G[ScopedAct gateway]
+    W[Trusted worker and local model] -->|Signed tool proposals| G
+    P[Configured policy and task grants] --> G
+    G -->|Authorized calls| A[Operations API]
+    A --> S[Synthetic portal and identity services]
+    G --> E[Decisions, approvals and execution evidence]
+    E --> C
+```
+
+Native mode runs these services on loopback under one OS account. Docker adds
+service-network and filesystem separation. Neither is a production deployment.
+See [local security boundaries](LOCAL_SECURITY_BOUNDARY.md).
 
 ## Guided reviewer access (0.20.0)
 
@@ -20,7 +40,7 @@ it does not silently replay it. See [reviewer setup](REVIEWER_QUICKSTART.md).
 ## Live incident lab (0.19.0)
 
 The live lab reuses task grants, approvals, lifecycle controls and the resource map.
-An isolated Ollama client sends signed requests to the gateway, which calls a fixed
+An Ollama client sends signed requests to the gateway, which calls a fixed
 operations API. That API reaches the portal authentication service, which validates
 tokens issued by a separate synthetic identity service. Portal configuration,
 deployment history and mutation receipts are stored transactionally. Login checks
@@ -41,7 +61,9 @@ The v0.15.0 managed workspace adds an interactive task-authority map and operato
 See [Workspace guide](WORKSPACE.md) for its workflow, architecture boundary, setup, and limitations.
 The ticket-pilot material below remains applicable to that separate workflow.
 
-The primary reference workflow is the authenticated synthetic ticket pilot. It separates the operator, primary agent, diagnostic child, authorization gateway, and protected ticket service. Separately authenticated development roles use HMAC keys; identity assurance is limited to possession of those configured secrets.
+## Separate scripted ticket evaluation
+
+The authenticated synthetic ticket pilot is an additional control evaluation, separate from the live-model incident lab. It separates the operator, primary agent, diagnostic child, authorization gateway, and protected ticket service. Separately authenticated development roles use HMAC keys; identity assurance is limited to possession of those configured secrets.
 
 ```mermaid
 flowchart TD
@@ -80,4 +102,4 @@ One gateway process serializes synchronous invocation and intervention. Acknowle
 
 ## Legacy evaluation paths
 
-The workspace application, unauthenticated operator console, procurement lab, process-local SDK, and optional model/AWS examples remain separate evaluation paths. Their protections differ from the ticket pilot and do not inherit its deployment boundaries. See [application guide](APPLICATION_GUIDE.md), [SDK integration](SDK_INTEGRATION.md), and the legacy section in [limitations](LIMITATIONS.md).
+The original file-workspace application (`scopedact serve`), its unauthenticated operator console, procurement lab, process-local SDK, and optional model/AWS examples remain separate evaluation paths. Their protections differ from the ticket pilot and do not inherit its deployment boundaries. See [application guide](APPLICATION_GUIDE.md), [SDK integration](SDK_INTEGRATION.md), and the legacy section in [limitations](LIMITATIONS.md).

@@ -26,3 +26,11 @@ incident-agent-run.json
 .scopedact-lab/
 
 .scopedact-native/
+
+# Exclude private files even when a custom evaluation directory is used.
+**/*.db
+**/*.db-*
+**/*.sqlite
+**/*.sqlite3
+**/.env
+**/.env.*

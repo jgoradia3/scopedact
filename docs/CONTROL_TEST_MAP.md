@@ -12,6 +12,9 @@
 | Workspace boundary | Traversal and actual internal symlink tests |
 | Approved child after parent intervention | test_pilot_delegation: pause and revoke after approval deny dispatch, preserve ticket state, and leave no mutation receipt |
 | SQLite connection ownership | tools/check_sqlite_resources.py tracks every in-process SQLite connection across the test suite |
-| Current baseline | 120 automated tests including the original legacy regression coverage |
+| Guided incident policy and runner | [Assignment tests](../tests/test_incident_assignment.py), [reviewer tests](../tests/test_reviewer.py), [agent tests](../tests/test_agent.py) |
+| Native startup and restart | [Native integration tests](../tests/test_native_review.py) |
+| Console interactions | [JavaScript regressions](../tests/test_console_actions.cjs) |
+| Current run results | [Dated validation](STABILIZATION_REVIEW.md); rerun the complete suite for the commit under review |
 
 These are fixture-specific correctness tests. They do not estimate real-world attack-blocking rates, prove arbitrary-model safety, or replace independent review. Hosted CI and platform compatibility should be assessed separately from local validation.

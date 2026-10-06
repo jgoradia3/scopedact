@@ -1,23 +1,26 @@
-# Draft technical-review invitation
+# Technical-review invitation template
 
-Subject: Independent technical feedback on ScopedAct's agent authorization controls
+Subject: Technical feedback on ScopedAct's agent authorization controls
 
-Hi [name],
+I'm developing ScopedAct, an open-source authorization and accountability reference
+implementation. It checks agent tool requests before execution and records allowed,
+denied, approved and completed actions by task.
 
-I'm developing ScopedAct, an open-source developer preview that places task-scoped authorization and human approval between an agent's proposed action and a protected tool.
+Would you be willing to evaluate one control or integration concern? The
+[walkthrough](DEMO_VIDEO.md) shows the experience before installation. The
+[native setup](NATIVE_REVIEW.md) runs a local model and synthetic incident on your own
+computer; Docker is optional. The separate [ticket pilot](TICKET_PILOT.md) offers
+scripted, reproducible control checks without a model.
 
-Would you be willing to run the isolated support-ticket pilot with synthetic data or review one control? I'm especially interested in bounded delegation, approval binding, concurrent replay prevention, parent revocation behavior, and whether action lineage and execution evidence are useful and accurate.
+I'm interested in specific weaknesses: whether denials prevent execution, approval
+binds the exact change, revocation prevents later calls, and the evidence is useful.
+The [review guide](REVIEW_GUIDE.md) explains what to record. An incomplete investigation
+or a usability problem is useful feedback; no positive endorsement is requested.
 
-Release: [insert published release link]
-Reviewer guide: [insert guide link]
-
-The Docker pilot includes a real REST workflow, separate primary/child/operator credentials, exact-content approval, revocation, and evidence export. It uses synthetic tickets and does not require a paid model or cloud account. The guide lists the tested behavior and remaining limitations. A useful review could be as small as reproducing one workflow and reporting a specific weakness or integration obstacle. I am asking for candid technical feedback, not an endorsement.
-
-If you share findings, please note the version, environment, and what you tested. Please use the security-reporting channel for sensitive issues.
-
-Thank you,
-Jay
+Please include the commit, environment and what you actually tested. Sensitive
+vulnerabilities should follow [security reporting](../SECURITY.md).
 
 ---
 
-Replace placeholders before sending. Record feedback and attribute it publicly only with the reviewer's permission. No invitations have been sent automatically.
+Adapt links to the published commit before sending. Obtain permission before publicly
+attributing feedback. This template does not establish independent use or endorsement.

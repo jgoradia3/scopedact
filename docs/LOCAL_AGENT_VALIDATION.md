@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Local agent evaluation — 0.16.0
 
 On October 2, 2026, the maintainer ran Ollama 0.35.0 with qwen3:1.7b

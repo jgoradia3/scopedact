@@ -1,4 +1,11 @@
-# v0.14.1 — Review-release cleanup
+# Changelog
+
+## Unreleased — repository clarity
+
+- Unify reviewer navigation and distinguish live-model, scripted and legacy paths.
+- Correct current architecture, threat boundaries, evidence guidance and release checks.
+- Consolidate older release notes and remove superseded screenshot-report assets.
+- Check documentation links in CI and include complete developer checks in source distributions.
 
 ## 0.20.0 — Guided local review
 
@@ -17,44 +24,6 @@
 - Console resource labels and explicit service verification results.
 - HTTP timeout/reconciliation tests, Docker boundary probes, reviewer guide and research mapping.
 - Earlier document and ticket evaluations remain supported.
-
-## 0.15.0 — Managed workspace investigation
-
-- Added task creation, grouped activity map, filtered evidence timeline and metadata export.
-- Added browser HMAC operator login, exact replacement review, pause/resume/revoke and receipt reconciliation.
-- Added versioned managed text documents with atomic mutation/history/receipt persistence.
-- Added scripted agent/helper workflow, operator import and historical export, container boundary probes.
-- Reused the existing gateway and constrained delegation; ticket defaults remain unchanged.
-- Added security and recovery tests. This is local evaluation software, not host-wide monitoring.
-
-- Close SQLite connections explicitly and check ownership in CI.
-- Verify approved child updates remain blocked after parent pause/revocation.
-- Rewrite current architecture and limitations, and clarify release/publication status.
-
-# v0.14.0 — Delegated pilot
-
-- Add separately authenticated child, subset/expiry-constrained delegation, ancestor lifecycle checks, attributed action evidence, and lineage CLI.
-- Add delegated evaluation, both-agent isolation checks, reviewer regression tests, capability/vision documentation, and precise security claims.
-
-# v0.13.0 — Support-ticket pilot
-
-- Add a fixed-route contextual REST connector and a persistent synthetic ticket backend.
-- Authenticate separate agent and operator roles; bind approval to reviewed digest with expiry.
-- Add authenticated CLI review, approval, task control, reconciliation, and redacted export.
-- Provide isolated Compose networks, file-based secrets, non-root service execution, and persistent volumes.
-- Add a 17-check evaluator, agent network probe, pilot security tests, and deployment documentation.
-
-# v0.12.0 — Review hardening
-
-- Bind durable approval to immutable canonical requests including input.
-- Reserve request IDs transactionally before dispatch; block concurrent execution and uncertain retries.
-- Show exact approval content and execution-claim state in the console.
-- Fix resource validation for root-folder listing and nested workspace paths.
-- Serialize event-chain appends and in-process SDK invocations.
-- Check delegation ancestors at runtime; reject workspace symlinks before resolution.
-- Add security regressions and reviewer documentation.
-
-# Changelog
 
 ## 0.18.0
 
@@ -78,6 +47,45 @@
 - Separate operator task creation from the agent-only runner.
 - Persist exact proposals for approval retries; stop on denial or uncertain outcomes.
 - Add real-gateway runner regression tests and a local-agent evaluation guide.
+
+
+## 0.15.0 — Managed workspace investigation
+
+- Added task creation, grouped activity map, filtered evidence timeline and metadata export.
+- Added browser HMAC operator login, exact replacement review, pause/resume/revoke and receipt reconciliation.
+- Added versioned managed text documents with atomic mutation/history/receipt persistence.
+- Added scripted agent/helper workflow, operator import and historical export, container boundary probes.
+- Reused the existing gateway and constrained delegation; ticket defaults remain unchanged.
+- Added security and recovery tests. This is local evaluation software, not host-wide monitoring.
+
+## 0.14.1 — Review-release cleanup
+
+- Close SQLite connections explicitly and check ownership in CI.
+- Verify approved child updates remain blocked after parent pause/revocation.
+- Rewrite current architecture and limitations, and clarify release/publication status.
+
+## 0.14.0 — Delegated pilot
+
+- Add separately authenticated child, subset/expiry-constrained delegation, ancestor lifecycle checks, attributed action evidence, and lineage CLI.
+- Add delegated evaluation, both-agent isolation checks, reviewer regression tests, capability/vision documentation, and precise security claims.
+
+## 0.13.0 — Support-ticket pilot
+
+- Add a fixed-route contextual REST connector and a persistent synthetic ticket backend.
+- Authenticate separate agent and operator roles; bind approval to reviewed digest with expiry.
+- Add authenticated CLI review, approval, task control, reconciliation, and redacted export.
+- Provide isolated Compose networks, file-based secrets, non-root service execution, and persistent volumes.
+- Add a 17-check evaluator, agent network probe, pilot security tests, and deployment documentation.
+
+## 0.12.0 — Review hardening
+
+- Bind durable approval to immutable canonical requests including input.
+- Reserve request IDs transactionally before dispatch; block concurrent execution and uncertain retries.
+- Show exact approval content and execution-claim state in the console.
+- Fix resource validation for root-folder listing and nested workspace paths.
+- Serialize event-chain appends and in-process SDK invocations.
+- Check delegation ancestors at runtime; reject workspace symlinks before resolution.
+- Add security regressions and reviewer documentation.
 
 
 ## 0.11.0 - 2026-08-19

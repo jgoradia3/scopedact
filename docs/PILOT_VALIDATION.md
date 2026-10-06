@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # v0.13.0 pilot validation
 
 Validated locally on macOS with Python 3.11 and Docker Desktop Engine 29.6.2, using Python 3.12-slim in the containers.

@@ -1,3 +1,5 @@
+> Separate reference example. For the current live-service incident console, start with [native review](NATIVE_REVIEW.md). Do not mix the setup commands across these workflows.
+
 # Document discovery and operator clarification
 
 The reviewer-facing workflow is the [staging authentication incident evaluation](INCIDENT_EVALUATION.md).

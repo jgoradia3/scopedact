@@ -1,13 +1,14 @@
-# Public review release checklist — v0.14.1
+# Release checklist
 
-The source is now public and the [initial hosted CI run](https://github.com/jgoradia3/scopedact/actions/runs/35798797312) passed. The reviewed ZIP remains a local artifact. A version tag, GitHub Release, and private vulnerability-reporting setup have not been verified. The checklist below remains a guide for completing publication.
+Use the exact commit being released. Do not infer release readiness from an older
+version's successful checks.
 
-1. Upload the clean source tree to the intended repository. Exclude runtime secrets, SQLite databases, generated evaluation output, environments, build directories, and caches.
-2. Follow [the reviewer guide](REVIEW_GUIDE.md) from a fresh environment and record the release checksum.
-3. Inspect the GitHub Actions `tests` workflow. Verify every Python 3.10–3.13 matrix job and the Docker ticket-pilot job succeeds for the exact release commit. The Python job includes explicit SQLite ownership checks; the Docker job includes both evaluations, both isolation probes, and post-restart evaluations.
-4. Configure a private vulnerability-reporting route and confirm its visibility. Update SECURITY.md only with a verified reporting method.
-5. After successful hosted execution, link the actual workflow run and add a CI badge using the verified repository URL. Do not replace “configured but not verified” with a success claim before then.
-6. Tag the reviewed commit `v0.14.1`, create a developer-preview release, and attach the source archive and SHA-256 checksum. Confirm the archive matches that commit's source.
-7. Invite a small number of reviewers to evaluate that exact version using synthetic data. Record what they actually tested and obtain permission before quoting or attributing feedback.
+1. Run the checks in [Contributing](../CONTRIBUTING.md) and follow [native setup](NATIVE_REVIEW.md) from a fresh installation. Record live-model outcomes separately from automated tests.
+2. Check the source archive contains only intended source, tests, documentation and synthetic assets. Exclude credentials, databases, model journals, environments and build output.
+3. Verify all seven hosted jobs for the exact commit: Python 3.10–3.13, ticket pilot, managed workspace and live incident lab. A configured workflow is not a successful run.
+4. Confirm package metadata and `scopedact --version` agree. Update the changelog for a new version; never reuse an existing release tag for different source.
+5. Confirm the reporting method in [SECURITY.md](../SECURITY.md) is available. Review limitations and setup instructions for accuracy.
+6. Tag the reviewed commit with its actual package version, create the developer-preview release, and attach a clean source archive and SHA-256 checksum matching that commit.
+7. Invite focused technical review using [the review guide](REVIEW_GUIDE.md). Record what reviewers actually ran; do not equate a code review or video view with organizational adoption.
 
-Do not treat a local test run, configured workflow, or draft review invitation as evidence of hosted CI, external adoption, or reviewer endorsement.
+These are publication steps, not a claim that a new tag or release already exists.

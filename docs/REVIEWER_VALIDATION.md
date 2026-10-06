@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Reviewer experience validation — 0.20.0
 
 Maintainer evaluation on 2026-10-03. This is not independent adoption or production

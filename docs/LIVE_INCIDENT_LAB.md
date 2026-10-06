@@ -15,10 +15,41 @@ as `read_document`. These reads reach services; they are not imported incident f
 
 ## Easy reviewer entry
 
-Use the [one-command reviewer flow](REVIEWER_QUICKSTART.md) for browser-guided
-investigation, approval, execution and verification. The commands below remain for
-advanced/manual evaluation. The live console now uses a single-use local sign-in
-link; it no longer requires selecting an operator key file.
+Install Python 3.10+ and start Docker Desktop (Linux users can use Docker Engine
+with Compose). From the downloaded or cloned repository:
+
+macOS / Linux:
+
+```sh
+python3 tools/start_review.py
+```
+
+Windows PowerShell, with Docker Desktop using Linux containers:
+
+```powershell
+py -3 tools/start_review.py
+```
+
+The launcher builds the containers, downloads the local model when missing and
+opens a private sign-in link. No separate host Ollama installation is needed.
+First setup can take several minutes. Follow the [console walkthrough](REVIEWER_QUICKSTART.md)
+after it opens. The Windows command is provided for the Docker path; the recorded
+maintainer validation is on macOS and hosted Linux, not a Windows validation claim.
+
+To generate another link while the Docker services are running:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install .
+.venv/bin/python -m scopedact.incident_lab review --open
+```
+
+On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python` and
+`py -3` instead of `python3`. The services keep running after the launcher exits.
+Stop them with the command in [boundaries and reset](#boundaries-and-reset).
+
+The commands below are for advanced/manual evaluation. Do not run them in parallel
+with a guided investigation using the same local lab state.
 
 ## Start the services
 

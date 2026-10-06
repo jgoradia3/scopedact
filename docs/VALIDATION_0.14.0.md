@@ -1,3 +1,5 @@
+> Historical validation snapshot. Results and publication status below apply to that recorded run. See [the latest review record](STABILIZATION_REVIEW.md) for subsequent checks.
+
 # Local release validation — v0.14.0
 
 Validated on 2026-09-22 on macOS with host Python 3.11, Docker Engine 29.6.2, and the Python 3.12 slim container image.

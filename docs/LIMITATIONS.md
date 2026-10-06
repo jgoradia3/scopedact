@@ -1,11 +1,11 @@
-# Current limitations — v0.14.1
+# Limitations
 
 ## Guided reviewer experience
 
 The live lab now uses short-lived local console sessions rather than browser-held
 operator keys. This is local HTTP development authentication, not public hosting or
-enterprise sign-in. The welcome screen has been visually inspected; signed-in UI
-validation remains incomplete. Scenario setup is deliberately privileged and only
+enterprise sign-in. Signed-in flows and automated console regressions have been checked as recorded in
+[validation](STABILIZATION_REVIEW.md); this is not exhaustive usability or security testing. Scenario setup is deliberately privileged and only
 operator-accessible. Worker failures and uncertain operations require inspection.
 The optional delegated helper and advanced recovery still use terminal commands.
 
@@ -40,13 +40,13 @@ These boundaries apply to the named components in this release. The [capability 
 - Proposal content and outcomes remain plaintext in local databases. Default evidence exports redact bodies/read results but retain potentially sensitive metadata. Use synthetic data.
 - Local event hash chains are not immutable evidence, signatures, or trusted timestamps. A privileged actor can rewrite the whole chain. Nonces and evidence accumulate without a retention service or comprehensive denial-of-service controls.
 
-See [pilot security](PILOT_SECURITY.md) and [current validation](VALIDATION_0.14.1.md).
+See [pilot security](PILOT_SECURITY.md) and [historical ticket validation](VALIDATION_0.14.1.md).
 
 ## Legacy workspace and laboratory limitations
 
 These are separate optional paths, not the authenticated ticket pilot above.
 
-- The workspace console/dashboard lacks user authentication and must remain on loopback. Local upstream-authority records and caller/reviewer strings do not establish enterprise identity.
+- The original file-workspace console (`scopedact serve`) lacks user authentication and must remain on loopback. Local upstream-authority records and caller/reviewer strings do not establish enterprise identity.
 - The procurement lab uses localhost services in one process and a public example HMAC key. It provides protocol demonstrations, not OS isolation.
 - Legacy lifecycle paths have canonical request binding and durable execution claims, but do not provide the ticket pilot's separate approval TTL, backend idempotency receipts, reconciliation endpoint, authenticated child roles, or ancestor task-pause propagation. Ancestor grant revocation and expiry are checked.
 - The process-local SDK does not coordinate multiple processes or sandbox agent code. Its caller identities are trusted integration inputs.

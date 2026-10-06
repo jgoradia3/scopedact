@@ -40,6 +40,4 @@ scopedact-workspace = "scopedact.workspace.__main__:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-scopedact = ["data/*.json"]
-
 "scopedact.workspace" = ["static/*.html", "static/*.js", "static/*.css", "fixtures/*.json"]
