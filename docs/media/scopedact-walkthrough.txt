@@ -1,25 +1,25 @@
 EDITED SCREENSHOT WALKTHROUGH; SYNTHETIC VOICE. NOT A CONTINUOUS LIVE RECORDING.
 
-1. Give agents a task. Keep authority bounded.
-ScopedAct checks an AI agent’s requests before protected tools execute. This walkthrough uses actual console screenshots and recorded local evaluations. It is an edited explanation of saved runs, not a continuous live recording.
+1. One task can trigger many actions.
+One request to an AI agent can lead to many actions across connected systems. Broad permissions can let a mistake go further than intended. Malicious instructions hidden in retrieved content can redirect the agent. And when records are scattered, a reviewer must reconstruct what the agent requested, what was permitted, and what actually happened.
 
-2. Run it on your computer.
-To try it yourself, download the source and follow the native review guide. Install Python and Ollama, download the local model, and install ScopedAct. Run the native review launcher. It opens a private localhost console link. Keep the terminal open while reviewing. This native mode does not provide Docker network isolation.
+2. Investigate a failed login. Keep control of the repair.
+Imagine you are investigating failed logins in a staging customer portal. A recent configuration change may be involved. You ask the agent to investigate. ScopedAct checks its requests against the task’s permissions and records the results. If the agent proposes a repair, you review the exact change before it can be applied.
 
-3. One incident. Different permissions.
-The lab models a staging login incident. The reviewer selects a simulated role. The intern can read diagnostics. The responder can also inspect configuration and propose changes for approval. These are local evaluation profiles, not enterprise identity integration.
+3. Same incident. Different access.
+The evaluation offers two access profiles. Diagnostic access permits diagnostic reads. Change-proposal access also permits reading authentication configuration and proposing an update. Applying that update still requires approval. These profiles let you compare permission boundaries for the same incident.
 
-4. Follow what actually happened.
-In the recorded intern evaluation, the agent read login events and deployment history. Its next request attempted to read authentication configuration. ScopedAct denied that request because the task did not grant permission. The protected connector did not execute it.
+4. See where access was stopped.
+In this recorded evaluation, the agent read login events and deployment history. It then requested authentication configuration. That request was outside the task’s permissions. ScopedAct blocked it before the protected connector executed it. The denial came from the actual request, not from a warning added to the demonstration.
 
-5. A denial becomes a decision point.
-The runner paused at the denial, before the remaining queued call could execute. One queued call was discarded. The operator continued with unchanged permissions. The model then finished without making another request. Ending the evaluation revoked the task. This pauses this runner, not every independent client.
+5. A blocked request. A clear next step.
+After the denial, the guided agent paused. The operator could continue with permitted evidence or end the evaluation. Continuing did not add permissions. In this recorded run, the agent then finished without making another request. Ending the evaluation revoked its remaining access.
 
-6. Inspect the evidence. Do not guess the path.
-The activity map groups actual requests by agent and resource. Request numbers show the observed order. Expand a resource to inspect its decision and execution record. A blocked resource is not a simulated warning, and the map does not invent agent reasoning.
+6. One task. A visible activity trail.
+The activity map connects the task, agent, and requested resources. It shows recorded attempts and their outcomes. Expand a resource to inspect the individual requests. This helps you review the activity for one assignment without piecing together unrelated records. The map covers requests through ScopedAct’s gateway.
 
-7. Authorization is not a correct diagnosis.
-A separate responder evaluation read four permitted resources, but the model misinterpreted configuration evidence and proposed no repair. Authorization controls do not guarantee a correct diagnosis. This limitation remains visible rather than being replaced with a staged successful outcome.
+7. The agent finished. The incident was not fixed.
+In another recorded run, the agent read four permitted resources and then stopped without proposing a repair. The incident was not confirmed fixed. This is an important distinction: permission to act does not mean the agent has found the right answer. The console keeps completed actions separate from confirmed recovery.
 
-8. Review the boundary. Challenge the controls.
-Review ScopedAct as a developer preview. Challenge the permission boundary, revocation, delegation constraints, and execution evidence. The source and draft review are available on GitHub at jgoradia3 slash scopedact. This local lab uses synthetic data and does not connect to production.
+8. Review the controls. Follow the evidence.
+Use the evaluation to inspect a blocked request, review any proposed change, and check the recorded outcome. The question is whether the agent’s actions stay within its authority, and whether you can understand and stop its activity. ScopedAct demonstrates these controls in a local test environment with synthetic data.
